@@ -9,6 +9,7 @@ import NextAuthProvider from '@/lib/services/auth/provider';
 import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 import TanstackProvider from '@/components/providers/tanstack-provider';
+import { Toaster } from '@/components/ui/toaster';
 
 const font = Sanchez({ subsets: ['latin'], weight: '400' });
 
@@ -46,6 +47,7 @@ export default function RootLayout({
               enableSystem
             >
               {children}
+              <Toaster />
             </ThemeProvider>
           </TanstackProvider>
         </NextAuthProvider>

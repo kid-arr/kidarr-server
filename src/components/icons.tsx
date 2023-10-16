@@ -14,6 +14,8 @@ import {
   PlusCircleIcon,
   PlusIcon,
   LogIn,
+  Save,
+  Copy,
 } from 'lucide-react';
 
 export type Icon = LucideIcon;
@@ -22,11 +24,13 @@ export const Icons = {
   add: PlusIcon,
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
+  copy: Copy,
   sun: SunMedium,
   login: LogIn,
   mobile: TabletSmartphone,
   moon: Moon,
   rocket: Rocket,
+  save: Save,
   spinner: Loader2,
   twitter: Twitter,
   user: User,

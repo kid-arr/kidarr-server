@@ -25,6 +25,8 @@ const ChildSelectList = () => {
       return data as ChildModel[];
     },
   });
+  if (isLoading) return <div>Loading....</div>;
+  if (isError) return <div>Error loading</div>;
   return (
     <Select>
       <SelectTrigger className="w-[180px]">

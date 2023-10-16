@@ -1,12 +1,12 @@
 import db from '@/db/schema';
 import { children } from '@/db/schema/children';
-import { getServerSession } from 'next-auth';
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
 import { NextResponse } from 'next/server';
-import authOptions from '@/lib/services/auth/config';
+import { getServerAuthSession } from '@/lib/services/auth/config';
 
+//TODO: create-t3-app supports app router now
 export async function GET(request: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
   if (!session)
     return NextResponse.json(
       { error: getReasonPhrase(StatusCodes.UNAUTHORIZED) },

@@ -1,25 +1,45 @@
 'use client';
 
 import * as React from 'react';
-import { useSearchParams } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 import { cn } from '@/lib/utils';
 import { newChildSchema } from '@/lib/validations/child';
-import { buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/use-toast';
 import { Icons } from '@/components/icons';
-
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+import { DialogFooter } from '../ui/dialog';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+import {
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+interface AddChildFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 type FormData = z.infer<typeof newChildSchema>;
 
-export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+export function AddChildForm({ className, ...props }: AddChildFormProps) {
+  const [PIN, setPIN] = React.useState('');
+  const queryClient = useQueryClient();
+  const { mutate: submitNewChild, isLoading } = useMutation({
+    mutationFn: async (name: string) =>
+      await axios.post('/api/child/create', { name }),
+    onSuccess: (e) => {
+      console.log('add-child-form', 'onSuccess', e);
+      toast({ description: 'Added new child' });
+      queryClient.invalidateQueries(['user-children']);
+      setPIN(e.data.pin);
+    },
+    onError: () => {
+      toast({ description: 'Something went wrong', variant: 'destructive' });
+    },
+  });
   const {
     register,
     handleSubmit,
@@ -27,44 +47,46 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   } = useForm<FormData>({
     resolver: zodResolver(newChildSchema),
   });
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [isGoogleLoading, setIsGoogleLoading] = React.useState<boolean>(false);
-  const searchParams = useSearchParams();
 
   async function onSubmit(data: FormData) {
-    setIsLoading(true);
-
-    const signInResult = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/child`,
-      {
-        method: 'POST',
-        body: JSON.stringify({
-          name: data.name,
-        }),
-      }
-    );
-
-    setIsLoading(false);
-
-    if (!signInResult?.ok) {
-      return toast({
-        title: 'Something went wrong.',
-        description: 'Your sign in request failed. Please try again.',
-        variant: 'destructive',
-      });
-    }
-
-    return toast({
-      title: 'Check your email',
-      description: 'We sent you a login link. Be sure to check your spam too.',
-    });
+    submitNewChild(data.name);
   }
 
+  if (PIN) {
+    return (
+      <>
+        <DialogTitle>Successfully added child</DialogTitle>
+        <div>
+          {`Your child's PIN is ${PIN}`}
+          <Button
+            variant={'ghost'}
+            size={'icon'}
+            className="ml-2"
+            onClick={() => {
+              navigator.clipboard.writeText(PIN).then(() => {
+                toast({ description: 'PIN copied to clipboard' });
+              });
+            }}
+          >
+            <Icons.copy className="h-3 w-3" />
+          </Button>
+        </div>
+      </>
+    );
+  }
   return (
     <div
       className={cn('grid gap-6', className)}
       {...props}
     >
+      <DialogHeader>
+        <DialogTitle>Add Child</DialogTitle>
+        <DialogDescription>
+          {
+            "Enter your child's details below and press save, then use the displayed PIN to register their device."
+          }
+        </DialogDescription>
+      </DialogHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-2">
           <div className="grid gap-1">
@@ -75,58 +97,29 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               Email
             </Label>
             <Input
-              id="email"
-              placeholder="name@example.com"
-              type="email"
+              id="name"
+              placeholder={"Child's name"}
+              type="text"
               autoCapitalize="none"
-              autoComplete="email"
+              autoComplete="child-name"
               autoCorrect="off"
-              disabled={isLoading || isGoogleLoading}
-              {...register('email')}
+              disabled={isLoading}
+              {...register('name')}
             />
-            {errors?.email && (
-              <p className="px-1 text-xs text-red-600">
-                {errors.email.message}
-              </p>
+            {errors?.name && (
+              <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
             )}
           </div>
-          <button
-            className={cn(buttonVariants())}
-            disabled={isLoading}
-          >
-            {isLoading && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            Sign In with Email
-          </button>
+        </div>
+        <div className="mt-5">
+          <DialogFooter>
+            <Button type="submit">
+              <Icons.save className="mr-2 h-4 w-4" />
+              Save
+            </Button>
+          </DialogFooter>
         </div>
       </form>
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
-          </span>
-        </div>
-      </div>
-      <button
-        type="button"
-        className={cn(buttonVariants({ variant: 'outline' }))}
-        onClick={() => {
-          setIsGoogleLoading(true);
-          signIn('google', { callbackUrl: '/dashboard' });
-        }}
-        disabled={isLoading || isGoogleLoading}
-      >
-        {isGoogleLoading ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <Icons.google className="mr-2 h-4 w-4" />
-        )}{' '}
-        Google
-      </button>
     </div>
   );
 }

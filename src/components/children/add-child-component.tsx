@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { AddChildForm } from '@/components/forms/add-child-form';
 const AddChildComponent = () => {
   return (
     <Dialog>
@@ -24,32 +25,7 @@ const AddChildComponent = () => {
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Add Child</DialogTitle>
-          <DialogDescription>
-            {
-              "Enter your child's details below and press save, then use the displayed PIN to register their device."
-            }
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label
-              htmlFor="name"
-              className="text-right"
-            >
-              Name
-            </Label>
-            <Input
-              id="name"
-              placeholder={"Your child's identifier"}
-              className="col-span-3"
-            />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
+        <AddChildForm />
       </DialogContent>
     </Dialog>
   );
