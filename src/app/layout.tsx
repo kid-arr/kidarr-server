@@ -1,17 +1,23 @@
-import "./globals.css";
-import "leaflet/dist/leaflet.css";
+import React from 'react';
 
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import './globals.css';
+import 'leaflet/dist/leaflet.css';
 
-const inter = Inter({ subsets: ["latin"] });
+import type { Metadata } from 'next';
+import { Sanchez } from 'next/font/google';
+import NextAuthProvider from '@/lib/services/auth/provider';
+import { ThemeProvider } from '@/components/theme-provider';
+import { cn } from '@/lib/utils';
+import TanstackProvider from '@/components/providers/tanstack-provider';
+
+const font = Sanchez({ subsets: ['latin'], weight: '400' });
 
 export const metadata: Metadata = {
-  title: "ParentGrin Falcon",
-  description: "Laser focused on your kids",
-  manifest: "/site.webmanifest",
+  title: 'ParentGrine Falcon',
+  description: 'Laser focused on your kids',
+  manifest: '/site.webmanifest',
   icons: {
-    icon: "/favicon.ico",
+    icon: '/favicon.ico',
   },
 };
 
@@ -21,9 +27,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <div className="mx-auto p-12">{children}</div>
+    <html
+      lang="en"
+      suppressHydrationWarning
+    >
+      <head />
+      <body
+        className={cn(
+          'min-h-screen bg-background font-sans antialiased',
+          font.className
+        )}
+      >
+        <NextAuthProvider>
+          <TanstackProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+            >
+              {children}
+            </ThemeProvider>
+          </TanstackProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );

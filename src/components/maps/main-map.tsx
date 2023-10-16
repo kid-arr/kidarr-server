@@ -1,7 +1,7 @@
-"use client";
-import "leaflet/dist/leaflet.css";
-import React from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+'use client'
+import 'leaflet/dist/leaflet.css'
+import React from 'react'
+import { MapContainer, TileLayer } from 'react-leaflet'
 
 const MainMap = () => {
   return (
@@ -18,7 +18,7 @@ const MainMap = () => {
         ></TileLayer>
       </MapContainer>
     </div>
-  );
-};
+  )
+}
 
-export default MainMap;
+export default MainMap

@@ -1,6 +1,18 @@
 {
   "editor.fontFamily": "'Hack Nerd Font Mono', 'monospace', monospace",
-  "workbench.colorTheme": ".NET Purple theme dark",
+  "files.exclude": {
+    "node_modules": true,
+    ".idea": true,
+    ".vscode": true,
+    ".next": true,
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true
+  },
+  "workbench.colorTheme": "Pink Cat Boo",
   "workbench.iconTheme": "vscode-icontheme-nomo-dark-macos",
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#ce0c36",
