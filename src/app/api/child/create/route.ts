@@ -1,24 +1,56 @@
-import { newChildSchema } from '@/lib/validations/child';
-import { getServerAuthSession } from '@/lib/services/auth/config';
-import { NextResponse } from 'next/server';
-import { StatusCodes, getReasonPhrase } from 'http-status-codes';
-import db from '@/db/schema';
-import { children } from '@/db/schema/children';
+import { newChildSchema } from '@/lib/validations/child'
+import { getServerAuthSession } from '@/lib/services/auth/config'
+import { NextResponse } from 'next/server'
+import { StatusCodes, getReasonPhrase } from 'http-status-codes'
+import db from '@/db/schema'
+import { child, childPIN } from '@/db/schema/child'
+import { users } from '@/db/schema/auth'
+import { eq } from 'drizzle-orm'
 
 export async function POST(req: Request) {
-  const session = await getServerAuthSession();
-  if (!session)
+  const session = await getServerAuthSession()
+  if (!session || !session.user?.email)
     return NextResponse.json(
       { error: getReasonPhrase(StatusCodes.UNAUTHORIZED) },
-      { status: StatusCodes.UNAUTHORIZED }
-    );
-  const body = await req.json();
+      { status: StatusCodes.UNAUTHORIZED },
+    )
 
-  const { name } = newChildSchema.parse(body);
+  const body = await req.json()
+  const user = await db
+    .selectDistinct({ id: users.id })
+    .from(users)
+    .where(eq(users.email, session.user.email))
 
-  const child = await db.insert(children).values({
-    name,
-  });
+  if (!user) {
+    return NextResponse.json(
+      { error: `Unable to find user id for ${session.user.email}` },
+      { status: StatusCodes.INTERNAL_SERVER_ERROR },
+    )
+  }
+  const { name } = newChildSchema.parse(body)
 
-  return NextResponse.json({ status: 'success', pin: 'fartle' });
+  const newChild = await db
+    .insert(child)
+    .values({
+      parentId: user[0].id.toString(),
+      name,
+    })
+    .returning()
+  if (!newChild) {
+    return NextResponse.json(
+      { error: `Error inserting child` },
+      { status: StatusCodes.INTERNAL_SERVER_ERROR },
+    )
+  }
+  let done = false
+  let pin = 0
+  while (!done) {
+    pin = Math.floor(1000 + Math.random() * 9000)
+    const exists = await db
+      .selectDistinct()
+      .from(childPIN)
+      .where(eq(childPIN.childId, newChild[0].id))
+    done = exists.length === 0
+  }
+  return NextResponse.json({ status: 'success', pin: pin })
 }

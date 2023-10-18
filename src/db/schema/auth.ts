@@ -4,22 +4,22 @@ import {
   primaryKey,
   integer,
   pgTable,
-} from 'drizzle-orm/pg-core'
-import type { AdapterAccount } from '@auth/core/adapters'
-
+  uuid,
+} from 'drizzle-orm/pg-core';
+import type { AdapterAccount } from '@auth/core/adapters';
 
 export const users = pgTable('user', {
-  id: text('id').notNull().primaryKey(),
+  id: uuid('id').notNull().primaryKey(),
   name: text('name'),
   email: text('email').notNull(),
   emailVerified: timestamp('emailVerified', { mode: 'date' }),
   image: text('image'),
-})
+});
 
 export const accounts = pgTable(
   'account',
   {
-    userId: text('userId')
+    userId: uuid('userId')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
     type: text('type').$type<AdapterAccount['type']>().notNull(),
@@ -35,16 +35,16 @@ export const accounts = pgTable(
   },
   (account) => ({
     compoundKey: primaryKey(account.provider, account.providerAccountId),
-  }),
-)
+  })
+);
 
 export const sessions = pgTable('session', {
   sessionToken: text('sessionToken').notNull().primaryKey(),
-  userId: text('userId')
+  userId: uuid('userId')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   expires: timestamp('expires', { mode: 'date' }).notNull(),
-})
+});
 
 export const verificationTokens = pgTable(
   'verificationToken',
@@ -55,5 +55,5 @@ export const verificationTokens = pgTable(
   },
   (vt) => ({
     compoundKey: primaryKey(vt.identifier, vt.token),
-  }),
-)
+  })
+);
