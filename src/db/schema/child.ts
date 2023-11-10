@@ -32,13 +32,14 @@ export const locations = pgTable('locations', {
   userId: uuid('user_id'),
 });
 
-export const childPIN = pgTable(
-  'child_pin',
+export const childDevices = pgTable(
+  'child_devices',
   {
     childId: uuid('child_id')
       .notNull()
       .references(() => child.id, { onDelete: 'cascade' }),
     pin: integer('pin'),
+    apiKey: varchar('api_key'),
     expires: timestamp('expires').default(sql`now() + interval '1 hour'`),
   },
   (childPIN) => ({

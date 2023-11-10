@@ -1,4 +1,5 @@
 interface ChildModel {
-  name: string
-  recentLocations: Location[]
+  id: string;
+  name: string;
+  recentLocations: Location[];
 }

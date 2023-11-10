@@ -42,11 +42,12 @@ CREATE TABLE IF NOT EXISTS "child" (
 	"key" varchar(256)
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "child_pin" (
+CREATE TABLE IF NOT EXISTS "child_devices" (
 	"child_id" uuid NOT NULL,
 	"pin" integer,
+	"api_key" varchar,
 	"expires" timestamp DEFAULT now() + interval '1 hour',
-	CONSTRAINT child_pin_child_id_pin PRIMARY KEY("child_id","pin")
+	CONSTRAINT child_devices_child_id_pin PRIMARY KEY("child_id","pin")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "locations" (
@@ -75,7 +76,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "child_pin" ADD CONSTRAINT "child_pin_child_id_child_id_fk" FOREIGN KEY ("child_id") REFERENCES "child"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "child_devices" ADD CONSTRAINT "child_devices_child_id_child_id_fk" FOREIGN KEY ("child_id") REFERENCES "child"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

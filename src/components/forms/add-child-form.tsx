@@ -27,13 +27,13 @@ type FormData = z.infer<typeof newChildSchema>;
 export function AddChildForm({ className, ...props }: AddChildFormProps) {
   const [PIN, setPIN] = React.useState('');
   const queryClient = useQueryClient();
-  const { mutate: submitNewChild, isLoading } = useMutation({
+  const { mutate: submitNewChild, isPending } = useMutation({
     mutationFn: async (name: string) =>
       await axios.post('/api/child/create', { name }),
     onSuccess: (e) => {
       console.log('add-child-form', 'onSuccess', e);
       toast({ description: 'Added new child' });
-      queryClient.invalidateQueries(['user-children']);
+      queryClient.invalidateQueries({ queryKey: ['user-children'] });
       setPIN(e.data.pin);
     },
     onError: () => {
@@ -103,7 +103,7 @@ export function AddChildForm({ className, ...props }: AddChildFormProps) {
               autoCapitalize="none"
               autoComplete="child-name"
               autoCorrect="off"
-              disabled={isLoading}
+              disabled={isPending}
               {...register('name')}
             />
             {errors?.name && (

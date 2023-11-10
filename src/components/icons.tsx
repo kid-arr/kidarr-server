@@ -16,6 +16,7 @@ import {
   LogIn,
   Save,
   Copy,
+  Cable,
 } from 'lucide-react';
 
 export type Icon = LucideIcon;
@@ -23,6 +24,7 @@ export type Icon = LucideIcon;
 export const Icons = {
   add: PlusIcon,
   chevronLeft: ChevronLeft,
+  connect: Cable,
   chevronRight: ChevronRight,
   copy: Copy,
   sun: SunMedium,

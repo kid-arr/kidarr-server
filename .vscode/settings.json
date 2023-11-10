@@ -15,23 +15,23 @@
   "workbench.colorTheme": "Pink Cat Boo",
   "workbench.iconTheme": "vscode-icontheme-nomo-dark-macos",
   "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#ce0c36",
-    "activityBar.background": "#ce0c36",
+    "activityBar.activeBackground": "#ab307e",
+    "activityBar.background": "#ab307e",
     "activityBar.foreground": "#e7e7e7",
     "activityBar.inactiveForeground": "#e7e7e799",
-    "activityBarBadge.background": "#2fb50b",
+    "activityBarBadge.background": "#25320e",
     "activityBarBadge.foreground": "#e7e7e7",
     "commandCenter.border": "#e7e7e799",
-    "sash.hoverBorder": "#ce0c36",
-    "statusBar.background": "#9e0929",
+    "sash.hoverBorder": "#ab307e",
+    "statusBar.background": "#832561",
     "statusBar.foreground": "#e7e7e7",
-    "statusBarItem.hoverBackground": "#ce0c36",
-    "statusBarItem.remoteBackground": "#9e0929",
+    "statusBarItem.hoverBackground": "#ab307e",
+    "statusBarItem.remoteBackground": "#832561",
     "statusBarItem.remoteForeground": "#e7e7e7",
-    "titleBar.activeBackground": "#9e0929",
+    "titleBar.activeBackground": "#832561",
     "titleBar.activeForeground": "#e7e7e7",
-    "titleBar.inactiveBackground": "#9e092999",
+    "titleBar.inactiveBackground": "#83256199",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#9e0929"
+  "peacock.color": "#832561"
 }

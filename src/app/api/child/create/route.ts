@@ -1,33 +1,36 @@
-import { newChildSchema } from '@/lib/validations/child'
-import { getServerAuthSession } from '@/lib/services/auth/config'
-import { NextResponse } from 'next/server'
-import { StatusCodes, getReasonPhrase } from 'http-status-codes'
-import db from '@/db/schema'
-import { child, childPIN } from '@/db/schema/child'
-import { users } from '@/db/schema/auth'
-import { eq } from 'drizzle-orm'
+import { newChildSchema } from '@/lib/validations/child';
+import { getServerAuthSession } from '@/lib/services/auth/config';
+import { createApiKey } from '@/lib/services/auth/api';
+
+import { NextResponse } from 'next/server';
+import { StatusCodes, getReasonPhrase } from 'http-status-codes';
+import db from '@/db/schema';
+
+import { child, childDevices } from '@/db/schema/child';
+import { users } from '@/db/schema/auth';
+import { eq } from 'drizzle-orm';
 
 export async function POST(req: Request) {
-  const session = await getServerAuthSession()
+  const session = await getServerAuthSession();
   if (!session || !session.user?.email)
     return NextResponse.json(
       { error: getReasonPhrase(StatusCodes.UNAUTHORIZED) },
-      { status: StatusCodes.UNAUTHORIZED },
-    )
+      { status: StatusCodes.UNAUTHORIZED }
+    );
 
-  const body = await req.json()
+  const body = await req.json();
   const user = await db
     .selectDistinct({ id: users.id })
     .from(users)
-    .where(eq(users.email, session.user.email))
+    .where(eq(users.email, session.user.email));
 
   if (!user) {
     return NextResponse.json(
       { error: `Unable to find user id for ${session.user.email}` },
-      { status: StatusCodes.INTERNAL_SERVER_ERROR },
-    )
+      { status: StatusCodes.INTERNAL_SERVER_ERROR }
+    );
   }
-  const { name } = newChildSchema.parse(body)
+  const { name } = newChildSchema.parse(body);
 
   const newChild = await db
     .insert(child)
@@ -35,22 +38,28 @@ export async function POST(req: Request) {
       parentId: user[0].id.toString(),
       name,
     })
-    .returning()
+    .returning();
   if (!newChild) {
     return NextResponse.json(
       { error: `Error inserting child` },
-      { status: StatusCodes.INTERNAL_SERVER_ERROR },
-    )
+      { status: StatusCodes.INTERNAL_SERVER_ERROR }
+    );
   }
-  let done = false
-  let pin = 0
+  let done = false;
+  let pin = 0;
   while (!done) {
-    pin = Math.floor(1000 + Math.random() * 9000)
+    pin = Math.floor(1000 + Math.random() * 9000);
     const exists = await db
       .selectDistinct()
-      .from(childPIN)
-      .where(eq(childPIN.childId, newChild[0].id))
-    done = exists.length === 0
+      .from(childDevices)
+      .where(eq(childDevices.childId, newChild[0].id));
+    done = exists.length === 0;
   }
-  return NextResponse.json({ status: 'success', pin: pin })
+  const apiKey = createApiKey();
+  await db
+    .insert(childDevices)
+    .values({ childId: newChild[0].id, pin, apiKey: apiKey })
+    .execute();
+
+  return NextResponse.json({ status: 'success', pin: pin });
 }
