@@ -12,7 +12,7 @@
     "**/.DS_Store": true,
     "**/Thumbs.db": true
   },
-  "workbench.colorTheme": "Pink Cat Boo",
+  "workbench.colorTheme": "Monokai Classic",
   "workbench.iconTheme": "vscode-icontheme-nomo-dark-macos",
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#ab307e",
@@ -33,5 +33,17 @@
     "titleBar.inactiveBackground": "#83256199",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#832561"
+  "peacock.color": "#832561",
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "localhost",
+      "username": "postgres",
+      "password": "hackme",
+      "database": "parentgrine"
+    }
+  ]
 }

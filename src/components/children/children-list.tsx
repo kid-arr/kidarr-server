@@ -19,7 +19,7 @@ const ChildrenList = () => {
     queryKey: ['user-children'],
     queryFn: async () => {
       const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/child`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/child`,
         {
           withCredentials: true,
         }
@@ -34,9 +34,9 @@ const ChildrenList = () => {
       <TableCaption>Here are your children.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Name</TableHead>
+          <TableHead className="">Name</TableHead>
           <TableHead>Last seen at</TableHead>
-          <TableHead className="text-right">Actions</TableHead>
+          <TableHead className="">Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -45,7 +45,12 @@ const ChildrenList = () => {
             <TableCell className="font-medium">{child.name}</TableCell>
             <TableCell>Douglas</TableCell>
             <TableCell className="text-right">
-              <ConnectDeviceDialog child={child} />
+              <div className="space-x-1">
+                <ConnectDeviceDialog child={child} />
+                <Button>
+                  <Icons.edit className="mr-2 h-4 w-4" />
+                </Button>
+              </div>
             </TableCell>
           </TableRow>
         ))}

@@ -17,6 +17,8 @@ import {
   Save,
   Copy,
   Cable,
+  Edit,
+  Edit2,
 } from 'lucide-react';
 
 export type Icon = LucideIcon;
@@ -27,6 +29,7 @@ export const Icons = {
   connect: Cable,
   chevronRight: ChevronRight,
   copy: Copy,
+  edit: Edit,
   sun: SunMedium,
   login: LogIn,
   mobile: TabletSmartphone,

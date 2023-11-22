@@ -37,7 +37,7 @@ const ConnectDeviceDialog: React.FC<ConnectDeviceDialogProps> = ({ child }) => {
             <QRCode
               size={190}
               style={{ height: 'auto', maxWidth: '100%', width: '100%' }}
-              value={`${process.env.NEXT_PUBLIC_BASE_URL}/device/connect?childId=${child.id}`}
+              value={child.id}
             />
           </div>
         </div>

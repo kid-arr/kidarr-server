@@ -4,19 +4,20 @@ import { createApiKey } from '@/lib/services/auth/api';
 
 import { NextResponse } from 'next/server';
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
-import db from '@/db/schema';
+import db from '@/db';
 
-import { child, childDevices } from '@/db/schema/child';
-import { users } from '@/db/schema/auth';
+import { child } from '@/db/schema';
+import { users } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import { device } from '@/db/schema';
 
 export async function POST(req: Request) {
   const session = await getServerAuthSession();
   if (!session || !session.user?.email)
-    return NextResponse.json(
-      { error: getReasonPhrase(StatusCodes.UNAUTHORIZED) },
-      { status: StatusCodes.UNAUTHORIZED }
-    );
+    return NextResponse.next({
+      statusText: getReasonPhrase(StatusCodes.UNAUTHORIZED),
+      status: StatusCodes.UNAUTHORIZED,
+    });
 
   const body = await req.json();
   const user = await db
@@ -25,10 +26,10 @@ export async function POST(req: Request) {
     .where(eq(users.email, session.user.email));
 
   if (!user) {
-    return NextResponse.json(
-      { error: `Unable to find user id for ${session.user.email}` },
-      { status: StatusCodes.INTERNAL_SERVER_ERROR }
-    );
+    return NextResponse.next({
+      statusText: `Unable to find user id for ${session.user.email}`,
+      status: StatusCodes.INTERNAL_SERVER_ERROR,
+    });
   }
   const { name } = newChildSchema.parse(body);
 
@@ -40,26 +41,11 @@ export async function POST(req: Request) {
     })
     .returning();
   if (!newChild) {
-    return NextResponse.json(
-      { error: `Error inserting child` },
-      { status: StatusCodes.INTERNAL_SERVER_ERROR }
-    );
+    return NextResponse.next({
+      statusText: 'Error inserting child',
+      status: StatusCodes.INTERNAL_SERVER_ERROR,
+    });
   }
-  let done = false;
-  let pin = 0;
-  while (!done) {
-    pin = Math.floor(1000 + Math.random() * 9000);
-    const exists = await db
-      .selectDistinct()
-      .from(childDevices)
-      .where(eq(childDevices.childId, newChild[0].id));
-    done = exists.length === 0;
-  }
-  const apiKey = createApiKey();
-  await db
-    .insert(childDevices)
-    .values({ childId: newChild[0].id, pin, apiKey: apiKey })
-    .execute();
 
-  return NextResponse.json({ status: 'success', pin: pin });
+  return NextResponse.json({ status: 'success' });
 }

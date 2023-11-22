@@ -1,5 +1,5 @@
-import db from '@/db/schema';
-import { child } from '@/db/schema/child';
+import db from '@/db';
+import { child } from '@/db/schema';
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
 import { NextResponse } from 'next/server';
 import { getServerAuthSession } from '@/lib/services/auth/config';

@@ -1,8 +1,8 @@
 {
+  "id": "31902de1-3b11-4911-8297-18ddfbb762fa",
+  "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
-  "id": "95fbc031-2db5-4391-aa2c-f48c8829eda6",
-  "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
       "name": "account",
@@ -101,6 +101,139 @@
         }
       },
       "uniqueConstraints": {}
+    },
+    "child": {
+      "name": "child",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "key": {
+          "name": "key",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "child_parent_id_user_id_fk": {
+          "name": "child_parent_id_user_id_fk",
+          "tableFrom": "child",
+          "tableTo": "user",
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "device": {
+      "name": "device",
+      "schema": "",
+      "columns": {
+        "child_id": {
+          "name": "child_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pin": {
+          "name": "pin",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "device_id": {
+          "name": "device_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "api_key": {
+          "name": "api_key",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires": {
+          "name": "expires",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now() + interval '1 hour'"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "device_child_id_child_id_fk": {
+          "name": "device_child_id_child_id_fk",
+          "tableFrom": "device",
+          "tableTo": "child",
+          "columnsFrom": [
+            "child_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "device_child_id_device_id": {
+          "name": "device_child_id_device_id",
+          "columns": [
+            "child_id",
+            "device_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "device_device_id_unique": {
+          "name": "device_device_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "device_id"
+          ]
+        },
+        "device_api_key_unique": {
+          "name": "device_api_key_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "api_key"
+          ]
+        }
+      }
     },
     "session": {
       "name": "session",
@@ -218,153 +351,6 @@
           ]
         }
       },
-      "uniqueConstraints": {}
-    },
-    "child": {
-      "name": "child",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "parent_id": {
-          "name": "parent_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "phone": {
-          "name": "phone",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "key": {
-          "name": "key",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "child_parent_id_user_id_fk": {
-          "name": "child_parent_id_user_id_fk",
-          "tableFrom": "child",
-          "tableTo": "user",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "child_devices": {
-      "name": "child_devices",
-      "schema": "",
-      "columns": {
-        "child_id": {
-          "name": "child_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "pin": {
-          "name": "pin",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "api_key": {
-          "name": "api_key",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "expires": {
-          "name": "expires",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "now() + interval '1 hour'"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "child_devices_child_id_child_id_fk": {
-          "name": "child_devices_child_id_child_id_fk",
-          "tableFrom": "child_devices",
-          "tableTo": "child",
-          "columnsFrom": [
-            "child_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "child_devices_child_id_pin": {
-          "name": "child_devices_child_id_pin",
-          "columns": [
-            "child_id",
-            "pin"
-          ]
-        }
-      },
-      "uniqueConstraints": {}
-    },
-    "locations": {
-      "name": "locations",
-      "schema": "",
-      "columns": {
-        "uuid1": {
-          "name": "uuid1",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "longitude": {
-          "name": "longitude",
-          "type": "numeric",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "latitude": {
-          "name": "latitude",
-          "type": "numeric",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }
   },

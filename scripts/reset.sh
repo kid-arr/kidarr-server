@@ -3,6 +3,7 @@ export PGUSER=postgres
 export PGPASSWORD=hackme
 export PGHOST=localhost
 
+
 echo Removing migrations
 rm -rf drizzle
 echo "Dropping db"
