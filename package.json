@@ -63,6 +63,8 @@
     "react-hook-form": "^7.48.2",
     "react-leaflet": "^4.2.1",
     "react-qr-code": "^2.0.12",
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4"
