@@ -1,6 +1,6 @@
 {
-  "id": "561713bf-5661-4567-a817-731284100ab2",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "344a3332-9b0e-4ac3-ab50-7d8c4d22a30d",
+  "prevId": "561713bf-5661-4567-a817-731284100ab2",
   "version": "5",
   "dialect": "pg",
   "tables": {
@@ -111,7 +111,7 @@
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
-          "default": "gen_random_uuid\n    ()"
+          "default": "gen_random_uuid\n      ()"
         },
         "parent_id": {
           "name": "parent_id",
@@ -190,7 +190,7 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
-          "default": "now\n      () + interval '1 hour'"
+          "default": "now\n        ()\n        + interval '1 hour'"
         }
       },
       "indexes": {},
@@ -247,13 +247,13 @@
         },
         "location_x": {
           "name": "location_x",
-          "type": "integer",
+          "type": "double precision",
           "primaryKey": false,
           "notNull": true
         },
         "location_y": {
           "name": "location_y",
-          "type": "integer",
+          "type": "double precision",
           "primaryKey": false,
           "notNull": true
         },

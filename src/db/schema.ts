@@ -5,13 +5,14 @@ import {
   integer,
   pgTable,
   uuid,
-  varchar,
+  varchar, pgSchema, doublePrecision,
 } from 'drizzle-orm/pg-core';
 import type { AdapterAccount } from '@auth/core/adapters';
 import { relations, sql } from 'drizzle-orm';
 
 //#region auth
-
+//TODO: use this schema once https://github.com/drizzle-team/drizzle-orm/issues/636 is fixed
+const authSchema = pgSchema('auth');
 export const users = pgTable('user', {
   id: uuid('id').notNull().primaryKey(),
   name: text('name'),
@@ -41,7 +42,7 @@ export const accounts = pgTable(
     compoundKey: primaryKey({
       columns: [account.provider, account.providerAccountId],
     }),
-  })
+  }),
 );
 
 export const sessions = pgTable('session', {
@@ -53,7 +54,7 @@ export const sessions = pgTable('session', {
 });
 
 export const verificationTokens = pgTable(
-  'verificationToken',
+  'verification_token',
   {
     identifier: text('identifier').notNull(),
     token: text('token').notNull(),
@@ -61,14 +62,15 @@ export const verificationTokens = pgTable(
   },
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
-  })
+  }),
 );
 //#endregion auth
 
 //#region child
 export const child = pgTable('child', {
   id: uuid('id')
-    .default(sql`gen_random_uuid()`)
+    .default(sql`gen_random_uuid
+      ()`)
     .primaryKey(),
   parentId: uuid('parent_id')
     .notNull()
@@ -86,16 +88,33 @@ export const childDevices = relations(child, ({ many }) => ({
 export const device = pgTable(
   'device',
   {
+    deviceId: varchar('device_id').notNull().unique(),
     childId: uuid('child_id')
       .notNull()
       .references(() => child.id, { onDelete: 'cascade' }),
-    pin: integer('pin').notNull(),
-    deviceId: varchar('device_id').notNull().unique(),
     apiKey: varchar('api_key').notNull().unique(),
-    expires: timestamp('expires').default(sql`now() + interval '1 hour'`),
+    //TODO: make the device request/pin a separate table and enforce the expiry
+    pin: integer('pin').notNull(),
+    expires: timestamp('expires')
+      .default(sql`now
+        ()
+        + interval '1 hour'`),
   },
   (device) => ({
-    composePk: primaryKey({ columns: [device.childId, device.deviceId] }),
-  })
+    composePk: primaryKey({ columns: [device.deviceId, device.childId] }),
+  }),
 );
+
+export const ping = pgTable(
+  'ping',
+  {
+    deviceId: varchar('device_id').notNull(),
+    locationX: doublePrecision('location_x').notNull(),
+    locationY: doublePrecision('location_y').notNull(),
+    timestamp: timestamp('timestamp').notNull(),
+  });
+export const devicePings = relations(device, ({ many }) => ({
+  pings: many(ping),
+}));
+
 //#endregion device

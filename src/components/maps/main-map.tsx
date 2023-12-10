@@ -1,13 +1,28 @@
 'use client'
 import 'leaflet/dist/leaflet.css'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MapContainer, TileLayer } from 'react-leaflet'
-import { Socket, io } from 'socket.io-client'
+import useHub from '@/lib/hooks/realtime/use-hub'
+import { LocationUpdate } from '@/types/location-update'
 
 const MainMap = () => {
-
-  const [isMounted, setIsMounted] = React.useState(false)
-  React.useEffect(() => {
+  useHub('/loc', {
+    onConnected: (hub) => {
+      console.log('dashboard/page', 'hub_onConnected', hub)
+      hub.on('LocationUpdate', (message: LocationUpdate) => {
+        console.log('dashboard/page', 'hub_ReceiveMessage', message.childId, message.x, message.y)
+      })
+    },
+    onDisconnected: () => {
+      console.log('dashboard/page', 'hub_onDisconnected')
+      console.log('dashboard/page', 'hub_onDisconnected')
+    },
+    onError: (error) => {
+      console.log('dashboard/page', 'hub_onError', error)
+    },
+  })
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => {
     setIsMounted(true)
   }, [])
 

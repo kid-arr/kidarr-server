@@ -12,5 +12,5 @@ dropdb -f --if-exists parentgrine
 echo "Creating db"
 createdb parentgrine
 
-bunx drizzle-kit generate:pg --config=./drizzle.config.ts
-bunx drizzle-kit push:pg --config=./drizzle.config.ts
+npx drizzle-kit generate:pg --config=./drizzle.config.ts
+npx drizzle-kit push:pg --config=./drizzle.config.ts
