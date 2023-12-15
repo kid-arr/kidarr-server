@@ -1,5 +1,5 @@
 {
-  "id": "561713bf-5661-4567-a817-731284100ab2",
+  "id": "cbc2e341-c3c0-4b72-b8ee-bcb6e11b7b34",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -111,7 +111,7 @@
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
-          "default": "gen_random_uuid\n    ()"
+          "default": "gen_random_uuid\n      ()"
         },
         "parent_id": {
           "name": "parent_id",
@@ -190,7 +190,7 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
-          "default": "now\n      () + interval '1 hour'"
+          "default": "now\n        ()\n        + interval '1 hour'"
         }
       },
       "indexes": {},
@@ -245,15 +245,15 @@
           "primaryKey": false,
           "notNull": true
         },
-        "location_x": {
-          "name": "location_x",
-          "type": "integer",
+        "latitude": {
+          "name": "latitude",
+          "type": "double precision",
           "primaryKey": false,
           "notNull": true
         },
-        "location_y": {
-          "name": "location_y",
-          "type": "integer",
+        "longitude": {
+          "name": "longitude",
+          "type": "double precision",
           "primaryKey": false,
           "notNull": true
         },

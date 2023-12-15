@@ -109,8 +109,8 @@ export const ping = pgTable(
   'ping',
   {
     deviceId: varchar('device_id').notNull(),
-    locationX: doublePrecision('location_x').notNull(),
-    locationY: doublePrecision('location_y').notNull(),
+    latitude: doublePrecision('latitude').notNull(),
+    longitude: doublePrecision('longitude').notNull(),
     timestamp: timestamp('timestamp').notNull(),
   });
 export const devicePings = relations(device, ({ many }) => ({

@@ -1,48 +1,42 @@
-'use client'
-import 'leaflet/dist/leaflet.css'
-import React, { useEffect, useState } from 'react'
-import { MapContainer, TileLayer } from 'react-leaflet'
-import useHub from '@/lib/hooks/realtime/use-hub'
-import { LocationUpdate } from '@/types/location-update'
+'use client';
+import 'leaflet/dist/leaflet.css';
+import React, { useEffect, useState } from 'react';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { usePingSocket } from '@/lib/hooks/use-ping-socket';
 
 const MainMap = () => {
-  useHub('/loc', {
-    onConnected: (hub) => {
-      console.log('dashboard/page', 'hub_onConnected', hub)
-      hub.on('LocationUpdate', (message: LocationUpdate) => {
-        console.log('dashboard/page', 'hub_ReceiveMessage', message.childId, message.x, message.y)
-      })
-    },
-    onDisconnected: () => {
-      console.log('dashboard/page', 'hub_onDisconnected')
-      console.log('dashboard/page', 'hub_onDisconnected')
-    },
-    onError: (error) => {
-      console.log('dashboard/page', 'hub_onError', error)
-    },
-  })
-  const [isMounted, setIsMounted] = useState(false)
+  const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
+    setIsMounted(true);
+  }, []);
+  //TODO: Replace with actual childId
+  usePingSocket({
+    childId: 'adeedf73-8068-442e-a9ed-144e18af34a4',
+    locationUpdate: (location) => {
+      console.log('MainMap', 'locationUpdate', location);
+    },
+  });
   return (
     isMounted && (
       <div>
         <MapContainer
           className='map'
           center={[51.903614, -8.468399]}
-          zoom={20}
+          zoom={10}
           scrollWheelZoom={true}
         >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-          ></TileLayer>
+          />
+          <Marker position={[51.903614, -8.468399]}>
+            <Popup>
+              A pretty CSS3 popup. <br /> Easily customizable.
+            </Popup>
+          </Marker>
         </MapContainer>
       </div>
     )
-  )
-}
+  );
+};
 
-export default MainMap
+export default MainMap;

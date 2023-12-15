@@ -1,16 +1,17 @@
-'use client'
-import Link from 'next/link'
+'use client';
+import Link from 'next/link';
 
-import { siteConfig } from '@/config/site'
-import { buttonVariants } from '@/components/ui/button'
-import { Icons } from '@/components/icons'
-import { MainNav } from '@/components/main-nav'
-import { ThemeToggle } from '@/components/header/theme-toggle'
-import { useSession } from 'next-auth/react'
-import AuthHeader from '@/components/header/auth-header'
+import { siteConfig } from '@/config/site';
+import { buttonVariants } from '@/components/ui/button';
+import { Icons } from '@/components/icons';
+import { MainNav } from '@/components/main-nav';
+import { ThemeToggle } from '@/components/header/theme-toggle';
+import { useSession } from 'next-auth/react';
+import AuthHeader from '@/components/header/auth-header';
+import PresenceIndicator from '@/components/widgets/presence-indicator';
 
 export function SiteHeader() {
-  const { data: session, status } = useSession()
+  const { data: session, status } = useSession();
   return (
     <header className='bg-background sticky top-0 z-40 w-full border-b'>
       <div
@@ -49,10 +50,11 @@ export function SiteHeader() {
               </div>
             </Link>
             <ThemeToggle />
+            <PresenceIndicator />
             <AuthHeader />
           </nav>
         </div>
       </div>
     </header>
-  )
+  );
 }

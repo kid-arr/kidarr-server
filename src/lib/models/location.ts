@@ -1,4 +1,4 @@
-interface Location {
-  lat: number;
-  lon: number;
+export default interface Location {
+  latitude: number;
+  longitude: number;
 }

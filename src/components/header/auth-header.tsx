@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { UserAvatar } from '@/components/user-avatar';
+import { UserAvatar } from '@/components/widgets/user-avatar';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Icons } from '../icons';
