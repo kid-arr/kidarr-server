@@ -5,7 +5,9 @@ import {
   integer,
   pgTable,
   uuid,
-  varchar, pgSchema, doublePrecision,
+  varchar,
+  pgSchema,
+  doublePrecision,
 } from 'drizzle-orm/pg-core';
 import type { AdapterAccount } from '@auth/core/adapters';
 import { relations, sql } from 'drizzle-orm';
@@ -42,7 +44,7 @@ export const accounts = pgTable(
     compoundKey: primaryKey({
       columns: [account.provider, account.providerAccountId],
     }),
-  }),
+  })
 );
 
 export const sessions = pgTable('session', {
@@ -62,7 +64,7 @@ export const verificationTokens = pgTable(
   },
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
-  }),
+  })
 );
 //#endregion auth
 
@@ -94,24 +96,27 @@ export const device = pgTable(
     apiKey: varchar('api_key').notNull().unique(),
     //TODO: make the device request/pin a separate table and enforce the expiry
     pin: integer('pin').notNull(),
-    expires: timestamp('expires')
-      .default(sql`now
+    expires: timestamp('expires').default(sql`now
         ()
         + interval '1 hour'`),
   },
   (device) => ({
     composePk: primaryKey({ columns: [device.deviceId, device.childId] }),
-  }),
+  })
 );
+const deviceRelations = relations(device, ({ one }) => ({
+  child: one(child, {
+    fields: [device.childId],
+    references: [child.id],
+  }),
+}));
 
-export const ping = pgTable(
-  'ping',
-  {
-    deviceId: varchar('device_id').notNull(),
-    latitude: doublePrecision('latitude').notNull(),
-    longitude: doublePrecision('longitude').notNull(),
-    timestamp: timestamp('timestamp').notNull(),
-  });
+export const ping = pgTable('ping', {
+  deviceId: varchar('device_id').notNull(),
+  latitude: doublePrecision('latitude').notNull(),
+  longitude: doublePrecision('longitude').notNull(),
+  timestamp: timestamp('timestamp').notNull(),
+});
 export const devicePings = relations(device, ({ many }) => ({
   pings: many(ping),
 }));
