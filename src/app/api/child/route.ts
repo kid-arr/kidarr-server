@@ -3,16 +3,22 @@ import { child } from '@/db/schema';
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
 import { NextResponse } from 'next/server';
 import { getServerAuthSession } from '@/lib/services/auth/config';
+import { eq } from 'drizzle-orm';
 
 //TODO: create-t3-app supports app router now
 export async function GET(request: Request) {
   const session = await getServerAuthSession();
-  if (!session)
+  if (!session || !session.user)
     return NextResponse.json(
       { error: getReasonPhrase(StatusCodes.UNAUTHORIZED) },
       { status: StatusCodes.UNAUTHORIZED }
     );
-  const activeChildren = await db.select().from(child);
+  const activeChildren = await db.query.child.findMany({
+    where: eq(child.parentId, session.user.id),
+    with: {
+      devices: true,
+    },
+  });
 
   return NextResponse.json(activeChildren);
 }

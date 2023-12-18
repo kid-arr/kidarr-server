@@ -69,8 +69,7 @@ export const verificationTokens = pgTable(
 //#region child
 export const child = pgTable('child', {
   id: uuid('id')
-    .default(sql`gen_random_uuid
-      ()`)
+    .default(sql`gen_random_uuid()`)
     .primaryKey(),
   parentId: uuid('parent_id')
     .notNull()

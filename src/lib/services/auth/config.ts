@@ -1,8 +1,8 @@
-import { getServerSession, type AuthOptions } from 'next-auth'
-import GoogleProvider from 'next-auth/providers/google'
-import { DrizzleAdapter } from '@auth/drizzle-adapter'
-import { env } from '@/env.mjs'
-import db from '@/db'
+import { getServerSession, type AuthOptions } from 'next-auth';
+import GoogleProvider from 'next-auth/providers/google';
+import { DrizzleAdapter } from '@auth/drizzle-adapter';
+import { env } from '@/env.mjs';
+import db from '@/db';
 
 const authOptions: AuthOptions = {
   adapter: DrizzleAdapter(db),
@@ -12,7 +12,24 @@ const authOptions: AuthOptions = {
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-}
-export const getServerAuthSession = () => getServerSession(authOptions)
+  callbacks: {
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        session.user.id = token.sub || '';
+      }
+      return session;
+    },
+    jwt: async ({ user, token }) => {
+      if (user) {
+        token.uid = user.id;
+      }
+      return token;
+    },
+  },
+  session: {
+    strategy: 'jwt',
+  },
+};
+export const getServerAuthSession = () => getServerSession(authOptions);
 
-export default authOptions
+export default authOptions;

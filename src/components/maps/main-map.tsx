@@ -1,9 +1,10 @@
 'use client';
 import 'leaflet/dist/leaflet.css';
 import React, { useEffect, useState } from 'react';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer, Circle } from 'react-leaflet';
 import { usePingSocket } from '@/lib/hooks/use-ping-socket';
 
+const fillBlueOptions = { fillColor: 'blue' };
 const MainMap = () => {
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
@@ -28,11 +29,12 @@ const MainMap = () => {
           <TileLayer
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           />
-          <Marker position={[51.903614, -8.468399]}>
+          <Circle center={[51.903614, -8.468399]} pathOptions={fillBlueOptions}
+                  radius={200}>
             <Popup>
               A pretty CSS3 popup. <br /> Easily customizable.
             </Popup>
-          </Marker>
+          </Circle>
         </MapContainer>
       </div>
     )
