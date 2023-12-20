@@ -68,57 +68,56 @@ export const verificationTokens = pgTable(
 );
 //#endregion auth
 
+export const userRelations = relations(users, ({ many }) => ({
+  children: many(child),
+}));
+
 //#region child
 export const child = pgTable('child', {
-  id: uuid('id')
-    .default(sql`gen_random_uuid()`)
-    .primaryKey(),
-  parentId: uuid('parent_id')
-    .notNull()
-    .references(() => users.id, { onDelete: 'cascade' }),
+  id: uuid('id').primaryKey(),
   name: varchar('name', { length: 256 }),
   phone: varchar('phone', { length: 256 }),
   apiKey: varchar('key', { length: 256 }),
+  parentId: uuid('parent_id'),
 });
-
-export const childDevices = relations(child, ({ many }) => ({
+export const childRelations = relations(child, ({ one, many }) => ({
+  parent: one(users, {
+    fields: [child.parentId],
+    references: [users.id],
+  }),
   devices: many(device),
 }));
-//#endregion child
-//#region device
+
 export const device = pgTable(
   'device',
   {
-    deviceId: varchar('device_id').notNull().unique(),
-    childId: uuid('child_id')
-      .notNull()
-      .references(() => child.id, { onDelete: 'cascade' }),
+    id: uuid('id').primaryKey(),
+    childId: uuid('child_id'),
     apiKey: varchar('api_key').notNull().unique(),
     //TODO: make the device request/pin a separate table and enforce the expiry
     pin: integer('pin').notNull(),
     expires: timestamp('expires').default(sql`now
         ()
         + interval '1 hour'`),
-  },
-  (device) => ({
-    composePk: primaryKey({ columns: [device.deviceId, device.childId] }),
-  })
+  }
 );
-const deviceRelations = relations(device, ({ one }) => ({
+export const deviceRelations = relations(device, ({ one, many }) => ({
   child: one(child, {
     fields: [device.childId],
     references: [child.id],
   }),
+  pings: many(ping),
 }));
 
 export const ping = pgTable('ping', {
-  deviceId: varchar('device_id').notNull(),
+  deviceId: uuid('device_id').notNull(),
   latitude: doublePrecision('latitude').notNull(),
   longitude: doublePrecision('longitude').notNull(),
   timestamp: timestamp('timestamp').notNull(),
 });
-export const devicePings = relations(device, ({ many }) => ({
-  pings: many(ping),
+export const pingRelations = relations(ping, ({ one, many }) => ({
+  child: one(device, {
+    fields: [ping.deviceId],
+    references: [device.id],
+  }),
 }));
-
-//#endregion device

@@ -5,7 +5,6 @@ import { NextResponse } from 'next/server';
 import { getServerAuthSession } from '@/lib/services/auth/config';
 import { eq } from 'drizzle-orm';
 
-//TODO: create-t3-app supports app router now
 export async function GET(request: Request) {
   const session = await getServerAuthSession();
   if (!session || !session.user)
