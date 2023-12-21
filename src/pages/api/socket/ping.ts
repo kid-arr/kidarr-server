@@ -1,16 +1,19 @@
 import db from '@/db';
 import { StatusCodes } from 'http-status-codes';
 import { ping } from '@/db/schema';
-import {
-  NextApiResponseServerIo,
-} from '@/lib/models/types/next-api-response-socket';
+import { NextApiResponseServerIo } from '@/lib/models/types/next-api-response-socket';
 import { badRequest, notAuthorised } from '@/app/api/responses';
 import { NextApiRequest, NextApiResponse } from 'next';
 import LocationUpdate from '@/lib/models/location-update';
 
-export default async function POST(req: NextApiRequest, res: NextApiResponseServerIo) {
+export default async function POST(
+  req: NextApiRequest,
+  res: NextApiResponseServerIo
+) {
   if (req.method !== 'POST') {
-    return res.status(StatusCodes.METHOD_NOT_ALLOWED).send({ message: 'Method not allowed' });
+    return res
+      .status(StatusCodes.METHOD_NOT_ALLOWED)
+      .send({ message: 'Method not allowed' });
   }
   const apiKey = req?.headers['x-api-key'] as string;
   const deviceId = req?.headers['x-device-id'] as string;
@@ -19,10 +22,8 @@ export default async function POST(req: NextApiRequest, res: NextApiResponseServ
   }
 
   const device = await db.query.device.findFirst({
-    where: (device, {
-      and,
-      eq,
-    }) => and(eq(device.deviceId, deviceId), eq(device.apiKey, apiKey)),
+    where: (device, { and, eq }) =>
+      and(eq(device.deviceId, deviceId), eq(device.apiKey, apiKey)),
   });
 
   if (!device) {
@@ -48,7 +49,7 @@ export default async function POST(req: NextApiRequest, res: NextApiResponseServ
   }
 
   const location = await db.insert(ping).values({
-    deviceId: device.deviceId,
+    deviceId: device.id,
     latitude: coordinates.latitude,
     longitude: coordinates.longitude,
     timestamp: new Date(),
@@ -66,5 +67,4 @@ export default async function POST(req: NextApiRequest, res: NextApiResponseServ
   res?.socket?.server?.io?.emit(`ping:${child.id}`, update);
   // Send a response
   return res.json({});
-
 }

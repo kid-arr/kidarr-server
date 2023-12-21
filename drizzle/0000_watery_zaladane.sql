@@ -14,25 +14,29 @@ CREATE TABLE IF NOT EXISTS "account" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "child" (
-	"id" uuid PRIMARY KEY NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" varchar(256),
+	"email" varchar(256),
 	"phone" varchar(256),
 	"key" varchar(256),
-	"parent_id" uuid
+	"parent_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "device" (
-	"id" uuid PRIMARY KEY NOT NULL,
-	"child_id" uuid,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"device_id" varchar NOT NULL,
+	"child_id" uuid NOT NULL,
 	"api_key" varchar NOT NULL,
 	"pin" integer NOT NULL,
 	"expires" timestamp DEFAULT now
         ()
         + interval '1 hour',
+	CONSTRAINT "device_device_id_unique" UNIQUE("device_id"),
 	CONSTRAINT "device_api_key_unique" UNIQUE("api_key")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "ping" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"device_id" uuid NOT NULL,
 	"latitude" double precision NOT NULL,
 	"longitude" double precision NOT NULL,
@@ -46,7 +50,7 @@ CREATE TABLE IF NOT EXISTS "session" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "user" (
-	"id" uuid PRIMARY KEY NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text,
 	"email" text NOT NULL,
 	"emailVerified" timestamp,

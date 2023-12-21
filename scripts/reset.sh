@@ -3,7 +3,6 @@ export PGUSER=postgres
 export PGPASSWORD=hackme
 export PGHOST=localhost
 
-
 echo Removing migrations
 rm -rf drizzle
 echo "Dropping db"
@@ -11,9 +10,9 @@ echo "Dropping db"
 dropdb -f --if-exists parentgrine
 echo "Creating db"
 createdb parentgrine
-echo "Exiting"
-exit
 
 bunx drizzle-kit generate:pg --config=./drizzle.config.ts
 bunx drizzle-kit push:pg --config=./drizzle.config.ts
-bunx tsx src/db/migrate.ts
+
+# bun run src/db/migrate.ts
+bun run ./src/db/scripts/seed.ts

@@ -49,7 +49,7 @@ const POST = async (req: Request, res: Response) => {
       .execute();
     return Response.json(
       { childId, deviceId, pin, apiKey },
-      { status: StatusCodes.CREATED },
+      { status: StatusCodes.CREATED }
     );
   }
   return badRequest('Invalid registration request');

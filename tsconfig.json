@@ -34,7 +34,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "drizzle.config.js"
-  ],
+, ".krud/seed.ts", "src/db/___migrate.ts___"  ],
   "exclude": [
     "node_modules"
   ]

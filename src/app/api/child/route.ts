@@ -15,7 +15,9 @@ export async function GET(request: Request) {
   const activeChildren = await db.query.child.findMany({
     where: eq(child.parentId, session.user.id),
     with: {
-      devices: true,
+      devices: {
+        with: { pings: true },
+      },
     },
   });
 

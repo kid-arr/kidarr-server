@@ -15,6 +15,7 @@ import { Icons } from '../icons';
 
 const AuthHeader = () => {
   const { data: session, status } = useSession();
+  if (status === 'loading') return null;
   return !session ? (
     <Link
       className={cn(buttonVariants({ variant: 'default', size: 'sm' }))}

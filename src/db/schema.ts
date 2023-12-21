@@ -16,7 +16,10 @@ import { relations, sql } from 'drizzle-orm';
 //TODO: use this schema once https://github.com/drizzle-team/drizzle-orm/issues/636 is fixed
 const authSchema = pgSchema('auth');
 export const users = pgTable('user', {
-  id: uuid('id').notNull().primaryKey(),
+  id: uuid('id')
+    .notNull()
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   name: text('name'),
   email: text('email').notNull(),
   emailVerified: timestamp('emailVerified', { mode: 'date' }),
@@ -74,11 +77,14 @@ export const userRelations = relations(users, ({ many }) => ({
 
 //#region child
 export const child = pgTable('child', {
-  id: uuid('id').primaryKey(),
+  id: uuid('id')
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   name: varchar('name', { length: 256 }),
+  email: varchar('email', { length: 256 }),
   phone: varchar('phone', { length: 256 }),
   apiKey: varchar('key', { length: 256 }),
-  parentId: uuid('parent_id'),
+  parentId: uuid('parent_id').notNull(),
 });
 export const childRelations = relations(child, ({ one, many }) => ({
   parent: one(users, {
@@ -88,19 +94,19 @@ export const childRelations = relations(child, ({ one, many }) => ({
   devices: many(device),
 }));
 
-export const device = pgTable(
-  'device',
-  {
-    id: uuid('id').primaryKey(),
-    childId: uuid('child_id'),
-    apiKey: varchar('api_key').notNull().unique(),
-    //TODO: make the device request/pin a separate table and enforce the expiry
-    pin: integer('pin').notNull(),
-    expires: timestamp('expires').default(sql`now
+export const device = pgTable('device', {
+  id: uuid('id')
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  deviceId: varchar('device_id').notNull().unique(),
+  childId: uuid('child_id').notNull(),
+  apiKey: varchar('api_key').notNull().unique(),
+  //TODO: make the device request/pin a separate table and enforce the expiry
+  pin: integer('pin').notNull(),
+  expires: timestamp('expires').default(sql`now
         ()
         + interval '1 hour'`),
-  }
-);
+});
 export const deviceRelations = relations(device, ({ one, many }) => ({
   child: one(child, {
     fields: [device.childId],
@@ -110,13 +116,16 @@ export const deviceRelations = relations(device, ({ one, many }) => ({
 }));
 
 export const ping = pgTable('ping', {
+  id: uuid('id')
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   deviceId: uuid('device_id').notNull(),
   latitude: doublePrecision('latitude').notNull(),
   longitude: doublePrecision('longitude').notNull(),
   timestamp: timestamp('timestamp').notNull(),
 });
 export const pingRelations = relations(ping, ({ one, many }) => ({
-  child: one(device, {
+  device: one(device, {
     fields: [ping.deviceId],
     references: [device.id],
   }),

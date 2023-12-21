@@ -1,5 +1,5 @@
 {
-  "id": "876770f8-cae4-4913-b299-855783c0b37c",
+  "id": "7ac914a6-b952-4605-8341-0b7f522e85a5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -110,10 +110,17 @@
           "name": "id",
           "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "name": {
           "name": "name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
           "type": "varchar(256)",
           "primaryKey": false,
           "notNull": false
@@ -134,7 +141,7 @@
           "name": "parent_id",
           "type": "uuid",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "indexes": {},
@@ -150,13 +157,20 @@
           "name": "id",
           "type": "uuid",
           "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "device_id": {
+          "name": "device_id",
+          "type": "varchar",
+          "primaryKey": false,
           "notNull": true
         },
         "child_id": {
           "name": "child_id",
           "type": "uuid",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "api_key": {
           "name": "api_key",
@@ -182,6 +196,13 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
+        "device_device_id_unique": {
+          "name": "device_device_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "device_id"
+          ]
+        },
         "device_api_key_unique": {
           "name": "device_api_key_unique",
           "nullsNotDistinct": false,
@@ -195,6 +216,13 @@
       "name": "ping",
       "schema": "",
       "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
         "device_id": {
           "name": "device_id",
           "type": "uuid",
@@ -275,7 +303,8 @@
           "name": "id",
           "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "name": {
           "name": "name",
