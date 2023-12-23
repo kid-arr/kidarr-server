@@ -15,4 +15,4 @@ bunx drizzle-kit generate:pg --config=./drizzle.config.ts
 bunx drizzle-kit push:pg --config=./drizzle.config.ts
 
 # bun run src/db/migrate.ts
-bun run ./src/db/scripts/seed.ts
+bun run ./src/server/db/scripts/seed.ts
