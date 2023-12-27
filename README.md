@@ -1,28 +1,64 @@
-# Create T3 App
+# ParentGrine Server🚀
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Welcome to ParentGrine, the ultimate child location tracking app that prioritizes safety and peace of mind for parents!
+🌟
 
-## What's next? How do I make an app with this?
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/parentgrine/parentgrine-server)](https://github.com/parentgrine/parentgrine-server/issues)
+[![GitHub stars](https://img.shields.io/github/stars/parentgrine/parentgrine-server)](https://github.com/parentgrine/parentgrine-server/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/parentgrine/parentgrine-server)](https://github.com/parentgrine/parentgrine-server/network)
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Overview
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+ParentGrine is a secure and user-friendly mobile application designed to help parents keep track of their children's
+whereabouts in real-time. With advanced location tracking features, intuitive UI, and robust security measures,
+ParentGrine provides parents with the peace of mind they deserve.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Features
 
-## Learn More
+- **Real-time Location Tracking**: Stay informed about your child's location at all times.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+- **Geofencing**: Set up safe zones and receive notifications when your child enters or leaves predefined areas.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+- **SOS Alert**: In case of an emergency, your child can send an SOS alert with their current location.
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+- **History Tracking**: View a detailed history of your child's movement over time.
 
-## How do I deploy this?
+- **Privacy and Security**: We prioritize the privacy and security of your data. All communication is encrypted, and
+  location data is accessible only to authorized users.
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## Getting Started
+
+### Prerequisites
+
+- iOS or Android device for your child
+- Web, iOS or Android device for the parent
+
+### Installation
+
+1. Clone the repository: `git clone https://github.com/parentgrine/parentgrine-server.git`
+2. Follow the installation instructions in the [documentation](docs/INSTALL.md).
+
+## Usage
+
+1. Open the ParentGrine app on your child's device.
+2. Log in with your parent account.
+3. Enjoy peace of mind by tracking your child's location.
+
+For more detailed instructions, check out our [User Guide](docs/UserGuide.md).
+
+## Contributing
+
+We welcome contributions from the community! Whether you're a developer, designer, or tester, your input is valuable.
+Check out our [contribution guidelines](CONTRIBUTING.md) for more information.
+
+## Support
+
+If you encounter any issues or have questions, feel free
+to [open an issue](https://github.com/parentgrine/parentgrine-server/issues). We're here to help!
+
+## License
+
+ParentGrine is licensed under the [MIT License](LICENSE).
+
+Happy tracking! 🌍✨

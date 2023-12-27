@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
-import { Link } from "lucide-react";
 import React from "react";
 import { Icons } from "../icons";
-import { Button, buttonVariants } from "../ui/button";
+import { buttonVariants } from "../ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
+import Link from "next/link";
 
 function HomePage() {
   return (
@@ -22,7 +22,7 @@ function HomePage() {
             )}
             href="/signin"
           >
-            <Icons.rocket className="w-4 h-4 mr-2" /> {"Let's go"}
+            <Icons.rocket className="w-4 h-4 mr-2" /> Let's go
           </Link>
         </div>
       </section>

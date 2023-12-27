@@ -9,7 +9,7 @@ export async function GET(request: Request) {
   const session = await getServerAuthSession();
   if (!session || !session.user)
     return NextResponse.json(
-      { error: getReasonPhrase(StatusCodes.UNAUTHORIZED),
+      { error: getReasonPhrase(StatusCodes.UNAUTHORIZED) },
       { status: StatusCodes.UNAUTHORIZED },
     );
   const activeChildren = await db.query.child.findMany({
