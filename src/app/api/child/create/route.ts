@@ -1,19 +1,18 @@
 import { newChildSchema } from '@/lib/validations/child';
-import { getServerAuthSession } from '@/lib/services/auth/config';
 import { createApiKey } from '@/lib/services/auth/api';
 
 import { NextResponse } from 'next/server';
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
-import {db} from '@/server/db';
+import { db } from '@/server/db';
 
 import { child } from '@/server/db/schema';
 import { users } from '@/server/db/schema';
 import { eq } from 'drizzle-orm';
-import { device } from '@/server/db/schema';
+import { getServerAuthSession } from '@/server/auth';
 
 export async function POST(req: Request) {
   const session = await getServerAuthSession();
-  if (!session || !session.user?.email)
+  if (!session?.user?.email)
     return NextResponse.next({
       statusText: getReasonPhrase(StatusCodes.UNAUTHORIZED),
       status: StatusCodes.UNAUTHORIZED,
@@ -36,7 +35,7 @@ export async function POST(req: Request) {
   const newChild = await db
     .insert(child)
     .values({
-      parentId: user[0].id.toString(),
+      parentId: "asdkfjhsa",
       name,
     })
     .returning();
