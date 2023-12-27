@@ -1,24 +1,9 @@
-'use client';
-import React, { useEffect, useMemo, useState } from 'react';
-import ChildrenFilter from '@/components/children/children-filter';
-import dynamic from 'next/dynamic';
+"use client";
+import React from "react";
+import DashboardPage from "@/components/pages/dashboard-page";
 
-const DashboardPage = () => {
-  //this needs to be a dynamic import
-  //otherwise it causes window not found errors
-  const Map = dynamic(() => import('@/components/maps/main-map'), {
-    ssr: false,
-  });
-  return (
-    <div>
-      <div className="z-10">
-        <ChildrenFilter />
-      </div>
-      <div className="z-0 mt-4">
-        <Map />
-      </div>
-    </div>
-  );
+const Dashboard = () => {
+  return <DashboardPage />;
 };
 
-export default DashboardPage;
+export default Dashboard;
