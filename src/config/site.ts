@@ -6,7 +6,7 @@ export const siteConfig = {
   mainNav: [
     {
       title: 'Home',
-      href: '/',
+      href: '/dashboard',
     },
     {
       title: 'Children',

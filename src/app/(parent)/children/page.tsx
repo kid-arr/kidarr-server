@@ -1,9 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 import ChildrenList from '@/components/children/children-list';
+import { api } from '@/trpc/server';
 
 const ChildrenPage = async () => {
-  return <ChildrenList />;
+  const kids = await api.child.mine.query();
+  return <ChildrenList kids={kids} />;
 };
 
 export default ChildrenPage;

@@ -13,7 +13,8 @@ export const childRouter = createTRPCRouter({
         parentId: ctx.session.user.id,
         name: input.name,
       };
-      await ctx.db.insert(child).values(c);
+      const result = await ctx.db.insert(child).values(c).returning();
+      return result[0];
     }),
 
   mine: protectedProcedure.query(async ({ ctx }) => {

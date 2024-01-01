@@ -1,7 +1,5 @@
-"use client";
-import React from "react";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+'use client';
+import React from 'react';
 import {
   Table,
   TableBody,
@@ -10,24 +8,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Icons } from "../icons";
-import ConnectDeviceDialog from "./connect-device-dialog";
-import { env } from "@/env";
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { Icons } from '../icons';
+import ConnectDeviceDialog from './connect-device-dialog';
+import ChildModel from '@/lib/models/child';
 
-const ChildrenList = () => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["user-children"],
-    queryFn: async () => {
-      const { data } = await axios.get(`${env.NEXT_PUBLIC_BASE_URL}/child`, {
-        withCredentials: true,
-      });
-      return data as ChildModel[];
-    },
-  });
-  if (isLoading) return <div>Loading....</div>;
-  if (isError) return <div>Error loading</div>;
+type ChildrenListProps = {
+  kids: ChildModel[];
+}
+const ChildrenList: React.FC<ChildrenListProps> = ({ kids }) => {
   return (
     <Table>
       <TableCaption>Here are your children.</TableCaption>
@@ -39,13 +29,13 @@ const ChildrenList = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data?.map((child) => (
-          <TableRow key={child.id}>
-            <TableCell className="font-medium">{child.name}</TableCell>
+        {kids?.map((kid) => (
+          <TableRow key={kid.id}>
+            <TableCell className="font-medium">{kid.name}</TableCell>
             <TableCell>Douglas</TableCell>
             <TableCell className="text-right">
               <div className="space-x-1">
-                <ConnectDeviceDialog child={child} />
+                <ConnectDeviceDialog child={kid} />
                 <Button>
                   <Icons.edit className="w-4 h-4 mr-2" />
                 </Button>

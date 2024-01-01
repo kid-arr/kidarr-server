@@ -30,20 +30,6 @@ const AddChildForm: React.FC<AddChildFormProps> = ({ className, ...props }) => {
   const utils = api.useUtils();
   const createChild = api.child.create.useMutation();
 
-  // const queryClient = useQueryClient();
-  // const { mutate: submitNewChild, isPending } = useMutation({
-  //   mutationFn: async (name: string) =>
-  //     await axios.post('/api/child/create', { name }),
-  //   onSuccess: (e) => {
-  //     console.log('add-child-form', 'onSuccess', e);
-  //     toast({ description: 'Added new child' });
-  //     queryClient.invalidateQueries({ queryKey: ['user-children'] });
-  //     setPIN(e.data.pin);
-  //   },
-  //   onError: () => {
-  //     toast({ description: 'Something went wrong', variant: 'destructive' });
-  //   },
-  // });
   const {
     register,
     handleSubmit,
@@ -54,12 +40,15 @@ const AddChildForm: React.FC<AddChildFormProps> = ({ className, ...props }) => {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const result = createChild.mutate({ name: data.name });
-      debugger;
+      const result = await createChild.mutateAsync({ name: data.name });
       toast({ description: "Added new child" });
       await utils.child.invalidate();
-      //queryClient.invalidateQueries({ queryKey: ['user-children'] });
-      setPIN(result.data?.pin);
+      console.log("add-child-form", "onSubmit", createChild.data);
+      if (result) {
+        setPIN(result.id);
+      } else {
+        toast({ description: "Something went wrong", variant: "destructive" });
+      }
     } catch (err) {
       toast({ description: "Something went wrong", variant: "destructive" });
     }

@@ -8,9 +8,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import axios from 'axios';
-import { useQuery } from '@tanstack/react-query';
-import { env } from '@/env';
 import ChildModel from '@/lib/models/child';
 
 type ChildSelectListProps = {
