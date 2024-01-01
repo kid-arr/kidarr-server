@@ -27,8 +27,8 @@ const ChildSelectList: React.FC<ChildSelectListProps> = ({ kids }) => {
           <SelectItem value="____all____">(All Children)</SelectItem>
           {kids?.map((r) => (
             <SelectItem
-              key={r.name}
-              value={r.name.toLowerCase()}
+              key={r.id}
+              value={r.id}
             >
               {r.name}
             </SelectItem>
