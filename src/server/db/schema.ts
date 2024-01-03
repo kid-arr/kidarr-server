@@ -83,6 +83,7 @@ export const child = pgTable('child', {
   name: varchar('name', { length: 256 }).notNull(),
   email: varchar('email', { length: 256 }),
   phone: varchar('phone', { length: 256 }),
+  avatar: varchar('avatar', { length: 256 }),
   apiKey: varchar('key', { length: 256 }),
   parentId: uuid('parent_id').notNull(),
 });
@@ -101,12 +102,12 @@ export const device = pgTable('device', {
     ()`),
   deviceId: varchar('device_id').notNull().unique(),
   childId: uuid('child_id').notNull(),
+  deviceName: varchar('device_name').notNull(),
   apiKey: varchar('api_key').notNull().unique(),
   //TODO: make the device request/pin a separate table and enforce the expiry
   pin: integer('pin').notNull(),
   expires: timestamp('expires').default(sql`now
-  ()
-        + interval '1 hour'`),
+  () + interval '1 hour'`),
 });
 export const deviceRelations = relations(device, ({ one, many }) => ({
   child: one(child, {

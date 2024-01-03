@@ -92,3 +92,15 @@
 .leaflet-bottom {
     z-index: 0 !important;
 }
+
+.leaflet-popup-content-wrapper {
+    border-radius: 0px;
+    padding: 0px !important;
+}
+
+.leaflet-popup-content {
+    padding: 0px !important;
+    border-radius: 0px !important;
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+}
