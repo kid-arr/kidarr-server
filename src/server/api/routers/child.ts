@@ -1,14 +1,14 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
-import { child } from "@/server/db/schema";
-import { eq } from "drizzle-orm";
+import { createTRPCRouter, protectedProcedure } from '@/server/api/trpc';
+import { child } from '@/server/db/schema';
+import { eq } from 'drizzle-orm';
 
 export const childRouter = createTRPCRouter({
   create: protectedProcedure
     .input(z.object({ name: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
-      console.log("Child", "Create", ctx.session);
+      console.log('Child', 'Create', ctx.session);
       const c = {
         parentId: ctx.session.user.id,
         name: input.name,
