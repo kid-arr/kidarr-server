@@ -19,7 +19,7 @@ import {
   Copy,
   Cable,
   Edit,
-  Edit2, Radar, PhoneCall,
+  Edit2, Radar, PhoneCall, Smartphone,
 } from 'lucide-react';
 
 export type Icon = LucideIcon;
@@ -31,6 +31,7 @@ export const Icons = {
   connect: Cable,
   chevronRight: ChevronRight,
   copy: Copy,
+  device: Smartphone,
   edit: Edit,
   sun: SunMedium,
   login: LogIn,

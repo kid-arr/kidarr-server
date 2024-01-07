@@ -1,4 +1,4 @@
-import {db} from '@/server/db';
+import { db } from '@/server/db';
 import { StatusCodes } from 'http-status-codes';
 import { ping } from '@/server/db/schema';
 import { NextApiResponseServerIo } from '@/lib/models/types/next-api-response-socket';
@@ -8,7 +8,7 @@ import LocationUpdate from '@/lib/models/location-update';
 
 export default async function POST(
   req: NextApiRequest,
-  res: NextApiResponseServerIo
+  res: NextApiResponseServerIo,
 ) {
   if (req.method !== 'POST') {
     return res
@@ -63,8 +63,8 @@ export default async function POST(
     },
     date: new Date(),
   };
-  console.log('ping-route', `ping:${child.id}`, update);
-  res?.socket?.server?.io?.emit(`ping:${child.id}`, update);
+  console.log('ping-route', `ping:${device.id}`, update);
+  res?.socket?.server?.io?.emit(`ping:${device.id}`, update);
   // Send a response
   return res.json({});
 }

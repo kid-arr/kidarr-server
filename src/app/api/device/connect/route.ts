@@ -1,14 +1,18 @@
-import {db} from '@/server/db';
+import { db } from '@/server/db';
 import { eq } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import { child, device } from '@/server/db/schema';
 import { createApiKey } from '@/lib/services/auth/api';
 import { badRequest } from '@/app/api/responses';
 
+type DeviceConnectRequest = {
+  deviceId: string;
+  childId: string;
+  deviceName: string;
+}
 const POST = async (req: Request, res: Response) => {
   if (req.method === 'POST') {
-    const url = new URL(req.url);
-    const { deviceId, childId } = await req.json();
+    const { deviceId, childId, deviceName } = await req.json() as DeviceConnectRequest;
     console.log('route', 'childId', childId);
     console.log('route', 'deviceId', deviceId);
 
@@ -43,13 +47,14 @@ const POST = async (req: Request, res: Response) => {
       .values({
         childId: childToRegister.id,
         deviceId: deviceId,
+        deviceName: deviceName,
         pin,
         apiKey: apiKey,
       })
       .execute();
     return Response.json(
-      { childId, deviceId, pin, apiKey },
-      { status: StatusCodes.CREATED }
+      { childId, deviceId, deviceName, pin, apiKey },
+      { status: StatusCodes.CREATED },
     );
   }
   return badRequest('Invalid registration request');

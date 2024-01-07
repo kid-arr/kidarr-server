@@ -16,13 +16,7 @@ const MainMap: React.FC<MainMapProps> = ({ kids }) => {
     setIsMounted(true);
     console.log('MainMap', 'kids', kids);
   }, [kids]);
-  //TODO: Replace with actual childId
-  usePingSocket({
-    childId: 'adeedf73-8068-442e-a9ed-144e18af34a4',
-    locationUpdate: (location) => {
-      console.log('MainMap', 'locationUpdate', location);
-    },
-  });
+
 
   return isMounted && <div>
     <MapContainer
@@ -37,10 +31,11 @@ const MainMap: React.FC<MainMapProps> = ({ kids }) => {
             kid.devices?.map((device) => {
                 const latestPing = getLatestPing(device.pings);
                 return (
-                  <MapMarker
+                  latestPing && <MapMarker
                     key={latestPing.id}
                     childName={kid.name}
                     avatar={kid.avatar}
+                    deviceId={device.id}
                     deviceName={device.deviceName}
                     latitude={latestPing.latitude}
                     longitude={latestPing.longitude}
