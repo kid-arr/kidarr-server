@@ -3,15 +3,15 @@ import { useEffect } from 'react';
 import LocationUpdate from '@/lib/models/location-update';
 
 type LocationSocketProps = {
-  childId: string;
+  deviceId: string;
   locationUpdate: (location: LocationUpdate) => void;
 }
 export const usePingSocket = ({
-  childId,
+  deviceId,
   locationUpdate,
 }: LocationSocketProps) => {
   const { socket } = useSocket();
-  const listenKey = `ping:${childId}`;
+  const listenKey = `ping:${deviceId}`;
   useEffect(() => {
     console.log('UsePingSocket', 'Listening on key', listenKey);
     if (!socket) return;
