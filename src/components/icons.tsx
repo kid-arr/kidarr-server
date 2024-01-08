@@ -1,8 +1,8 @@
 import {
   ChevronLeft,
   ChevronRight,
-  LucideIcon,
-  LucideProps,
+  type LucideIcon,
+  type LucideProps,
   TabletSmartphone,
   Loader2,
   MessageCircleMore,

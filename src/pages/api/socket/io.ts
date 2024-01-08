@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { type Server as NetServer } from "http";
-import { type NextApiRequest, NextApiResponse } from "next";
+import { type NextApiRequest } from "next";
 import { Server as ServerIO } from "socket.io";
 import { type NextApiResponseServerIo } from "@/lib/models/types/next-api-response-socket";
 

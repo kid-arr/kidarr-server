@@ -1,4 +1,4 @@
-import Location from './location';
+import type Location from './location';
 
 export default interface LocationUpdate {
   childId: string;

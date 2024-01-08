@@ -1,24 +1,24 @@
-import React from 'react';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import React from "react";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { signIn, signOut, useSession } from "next-auth/react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { UserAvatar } from '@/components/widgets/user-avatar';
-import Link from 'next/link';
-import { cn } from '@/lib/utils';
-import { Icons } from '../icons';
+} from "@/components/ui/dropdown-menu";
+import { UserAvatar } from "@/components/widgets/user-avatar";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { Icons } from "../icons";
 
 const AuthHeader = () => {
   const { data: session, status } = useSession();
-  if (status === 'loading') return null;
+  if (status === "loading") return null;
   return !session ? (
     <Link
-      className={cn(buttonVariants({ variant: 'default', size: 'sm' }))}
+      className={cn(buttonVariants({ variant: "default", size: "sm" }))}
       href="/signin"
     >
       <Icons.login className="mr-2 h-4 w-4" />
@@ -61,9 +61,9 @@ const AuthHeader = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="cursor-pointer"
-          onSelect={(event) => {
+          onSelect={async (event) => {
             event.preventDefault();
-            signOut({
+            await signOut({
               callbackUrl: `${window.location.origin}`,
             });
           }}

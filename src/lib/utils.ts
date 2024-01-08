@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import PingModel from '@/lib/models/ping';
+import type PingModel from '@/lib/models/ping';
 import { ping } from '@/server/db/schema';
 
 export function cn(...inputs: ClassValue[]) {

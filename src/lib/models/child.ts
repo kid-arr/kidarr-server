@@ -1,4 +1,4 @@
-import DeviceModel from './device';
+import type DeviceModel from './device';
 
 export default interface ChildModel {
   id: string;

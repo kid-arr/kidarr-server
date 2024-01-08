@@ -2,7 +2,7 @@ import React from 'react';
 import ChildSelectList from './child-select-list';
 
 import AddChildComponent from './add-child-component';
-import ChildModel from '@/lib/models/child';
+import type ChildModel from '@/lib/models/child';
 
 type ChildrenFilterProps = {
   kids: ChildModel[];

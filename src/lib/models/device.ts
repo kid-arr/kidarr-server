@@ -1,4 +1,4 @@
-import PingModel from './ping';
+import type PingModel from './ping';
 
 export default interface DeviceModel {
   id: string;

@@ -12,7 +12,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Icons } from '../icons';
 import ConnectDeviceDialog from './connect-device-dialog';
-import ChildModel from '@/lib/models/child';
+import type ChildModel from '@/lib/models/child';
 
 type ChildrenListProps = {
   kids: ChildModel[];
