@@ -2,7 +2,7 @@ import React from 'react';
 import { api } from '@/trpc/server';
 import ChildrenFilter from '@/components/children/children-filter';
 import dynamic from 'next/dynamic';
-import ChildModel from '@/lib/models/child';
+import { MapViewTypeSelector } from '@/components/maps/map-viewtype-selector';
 
 const Dashboard = async () => {
   const kids = await api.child.mine.query();
@@ -10,10 +10,11 @@ const Dashboard = async () => {
     ssr: false,
   });
   return <div>
-    <div className="z-10">
+    <div className="flex flex-row justify-between">
       <ChildrenFilter kids={kids} />
+      <MapViewTypeSelector />
     </div>
-    <div className="z-0 mt-4">
+    <div className="mt-4">
       <Map kids={kids} />
     </div>
   </div>;

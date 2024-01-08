@@ -19,7 +19,7 @@ import {
   Copy,
   Cable,
   Edit,
-  Edit2, Radar, PhoneCall, Smartphone,
+  Edit2, Radar, PhoneCall, Smartphone, Waypoints, LocateFixed,
 } from 'lucide-react';
 
 export type Icon = LucideIcon;
@@ -34,12 +34,14 @@ export const Icons = {
   device: Smartphone,
   edit: Edit,
   sun: SunMedium,
+  location: LocateFixed,
   login: LogIn,
   message: MessageCircleMore,
   mobile: TabletSmartphone,
   moon: Moon,
   presence: Radar,
   rocket: Rocket,
+  route: Waypoints,
   save: Save,
   spinner: Loader2,
   twitter: Twitter,
