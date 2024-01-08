@@ -1,6 +1,6 @@
 import { useSocket } from '@/lib/services/realtime/socket-provider';
 import { useEffect } from 'react';
-import LocationUpdate from '@/lib/models/location-update';
+import type LocationUpdate from '@/lib/models/location-update';
 
 type LocationSocketProps = {
   deviceId: string;

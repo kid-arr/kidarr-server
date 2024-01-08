@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import ChildModel from '@/lib/models/child';
+import type ChildModel from '@/lib/models/child';
 
 type ChildSelectListProps = {
   kids: ChildModel[];

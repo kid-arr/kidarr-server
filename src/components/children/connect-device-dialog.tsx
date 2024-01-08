@@ -12,7 +12,7 @@ import {
 
 import { Icons } from '@/components/icons';
 import QRCode from 'react-qr-code';
-import ChildModel from '@/lib/models/child';
+import type ChildModel from '@/lib/models/child';
 
 type ConnectDeviceDialogProps = {
   child: ChildModel;

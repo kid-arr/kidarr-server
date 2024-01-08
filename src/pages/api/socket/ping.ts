@@ -1,22 +1,28 @@
-import { db } from '@/server/db';
-import { StatusCodes } from 'http-status-codes';
-import { ping } from '@/server/db/schema';
-import { NextApiResponseServerIo } from '@/lib/models/types/next-api-response-socket';
-import { badRequest, notAuthorised } from '@/app/api/responses';
-import { NextApiRequest, NextApiResponse } from 'next';
-import LocationUpdate from '@/lib/models/location-update';
+import { db } from "@/server/db";
+import { StatusCodes } from "http-status-codes";
+import { ping } from "@/server/db/schema";
+import { type NextApiResponseServerIo } from "@/lib/models/types/next-api-response-socket";
+import { badRequest, notAuthorised } from "@/app/api/responses";
+import { type NextApiRequest } from "next";
+import type LocationUpdate from "@/lib/models/location-update";
 
+type PingRequest = {
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+};
 export default async function POST(
   req: NextApiRequest,
   res: NextApiResponseServerIo,
 ) {
-  if (req.method !== 'POST') {
+  if (req.method !== "POST") {
     return res
       .status(StatusCodes.METHOD_NOT_ALLOWED)
-      .send({ message: 'Method not allowed' });
+      .send({ message: "Method not allowed" });
   }
-  const apiKey = req?.headers['x-api-key'] as string;
-  const deviceId = req?.headers['x-device-id'] as string;
+  const apiKey = req?.headers["x-api-key"] as string;
+  const deviceId = req?.headers["x-device-id"] as string;
   if (!apiKey || !deviceId) {
     return notAuthorised();
   }
@@ -41,11 +47,11 @@ export default async function POST(
     where: (user, { eq }) => eq(user.id, child.parentId),
   });
 
-  const { coordinates } = req.body;
+  const { coordinates } = req.body as PingRequest;
 
   // Check if coordinates exist in the headers
   if (!coordinates) {
-    return badRequest('Invalid coordinates');
+    return badRequest("Invalid coordinates");
   }
 
   const location = await db.insert(ping).values({
@@ -63,7 +69,7 @@ export default async function POST(
     },
     date: new Date(),
   };
-  console.log('ping-route', `ping:${device.id}`, update);
+  console.log("ping-route", `ping:${device.id}`, update);
   res?.socket?.server?.io?.emit(`ping:${device.id}`, update);
   // Send a response
   return res.json({});

@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import React, { useEffect, useState } from 'react';
 import { MapContainer, Marker, Popup, TileLayer, Circle } from 'react-leaflet';
 import { usePingSocket } from '@/lib/hooks/use-ping-socket';
-import ChildModel from '@/lib/models/child';
+import type ChildModel from '@/lib/models/child';
 import MapMarker from '@/components/maps/map-marker';
 import { getLatestPing } from '@/lib/utils';
 
