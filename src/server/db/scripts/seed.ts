@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
-import { db } from '..';
-import * as schema from '../schema';
-import { faker } from '@faker-js/faker';
+import { db } from "..";
+import * as schema from "../schema";
+import { faker } from "@faker-js/faker";
 
 const main = async () => {
   const seedUsers = [
     {
-      id: '2250f34e-997a-44de-ab8d-beddeda13525',
-      name: 'Fergal Moran',
-      email: 'fergal.moran@gmail.com',
+      id: "2250f34e-997a-44de-ab8d-beddeda13525",
+      name: "Fergal Moran",
+      email: "fergal.moran@gmail.com",
       emailVerified: new Date(),
     },
   ];
@@ -16,10 +16,10 @@ const main = async () => {
 
   const seedChildren = [
     {
-      id: '2250f34e-997a-44de-ab8d-beddeda13525',
-      name: 'Lil Debuggles',
-      phone: '123 456 789',
-      email: 'lildebuggles@parentgrine.com',
+      id: "2250f34e-997a-44de-ab8d-beddeda13525",
+      name: "Lil Debuggles",
+      phone: "123 456 789",
+      email: "lildebuggles@kidarr.com",
       avatar: faker.image.avatar(),
       parentId: seedUsers[0]?.id!,
     },
@@ -28,11 +28,11 @@ const main = async () => {
 
   const seedDevices = [
     {
-      id: '5af79a30-df27-4646-9d9f-77e19b4191c1',
-      deviceId: '373791e3-afe3-49de-b0a2-842a44071585',
+      id: "5af79a30-df27-4646-9d9f-77e19b4191c1",
+      deviceId: "373791e3-afe3-49de-b0a2-842a44071585",
       childId: seedChildren[0]?.id!,
-      deviceName: 'Not an iPhone',
-      apiKey: 'nQhXtqemsWjzBpbDxlIV2qtDx9xxO4oZVBJADdhJLfA=',
+      deviceName: "Not an iPhone",
+      apiKey: "nQhXtqemsWjzBpbDxlIV2qtDx9xxO4oZVBJADdhJLfA=",
       pin: 1234,
       expires: new Date(2065),
     },
@@ -63,12 +63,12 @@ const main = async () => {
   return;
 };
 
-console.log('seed', 'Seeding');
+console.log("seed", "Seeding");
 main().then(
   () => {
-    console.log('seed', 'Seeded');
+    console.log("seed", "Seeded");
   },
   (err) => {
-    console.log('seed', 'Error', err);
+    console.log("seed", "Error", err);
   },
 );
