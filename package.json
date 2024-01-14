@@ -7,7 +7,7 @@
     "build": "next build",
     "db:push": "dotenv drizzle-kit push:postgres",
     "db:studio": "dotenv drizzle-kit studio",
-    "dev": "NODE_ENV=development next dev -p 3002 & local-ssl-proxy --key /etc/letsencrypt/live/dev.fergl.ie/privkey.pem --cert /etc/letsencrypt/live/dev.fergl.ie/fullchain.pem --source 3000 --target 3002",
+    "dev": "NODE_ENV=development next dev -p 3002 & local-ssl-proxy --config ./ssl-proxy.json",
     "lint": "next lint",
     "start": "next start"
   },
