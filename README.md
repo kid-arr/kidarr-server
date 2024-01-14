@@ -1,6 +1,6 @@
 # Kidarr Server🚀
 
-Welcome to Kidarr, the ultimate child location tracking app that prioritizes safety and peace of mind for parents!
+Welcome to Kidarr, the ultimate child location tracking app that prioritises safety and peace of mind for parents!
 🌟
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
