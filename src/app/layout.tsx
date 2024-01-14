@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-
+import { Analytics } from "@vercel/analytics/react";
 import { ABeeZee as TheFont } from "next/font/google";
 import { cookies } from "next/headers";
 
@@ -35,6 +35,7 @@ export default function RootLayout({
           <TRPCReactProvider cookies={cookies().toString()}>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               {children}
+              <Analytics />
             </ThemeProvider>
           </TRPCReactProvider>
         </NextAuthProvider>
