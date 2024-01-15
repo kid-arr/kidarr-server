@@ -3,7 +3,7 @@ import { SecureDebugDetails } from "@/components/debug/SecureDebugDetails";
 const DebugPage = async () => {
   return (
     <div>
-      <SecureDebugDetails />
+      {/* <SecureDebugDetails /> */}
     </div>
   );
 };
