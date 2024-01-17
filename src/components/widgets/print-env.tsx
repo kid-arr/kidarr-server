@@ -11,7 +11,7 @@ type PrintEnvProps = {
 
 const PrintEnv: React.FC<PrintEnvProps> = ({ session, request }) => {
   return (
-    <div className="flex flex-col space-x-2 space-y-2">
+    <div className="flex flex-col space-y-4">
       {session && (
         <Card>
           <CardHeader>Session</CardHeader>
