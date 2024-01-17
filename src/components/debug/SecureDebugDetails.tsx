@@ -7,11 +7,5 @@ import { headers } from "next/headers";
 export const SecureDebugDetails = async () => {
   const session = await getServerSession(authOptions);
   const request = headers();
-  return (
-    <div>
-      <div className="p-6">
-        <PrintEnv session={session} request={request} />
-      </div>
-    </div>
-  );
+  return <PrintEnv session={session} request={request} />;
 };
