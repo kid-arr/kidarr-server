@@ -15,6 +15,13 @@
       "when": 1705877897654,
       "tag": "0001_sticky_frightful_four",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1706464847221,
+      "tag": "0002_abandoned_luckman",
+      "breakpoints": true
     }
   ]
 }
