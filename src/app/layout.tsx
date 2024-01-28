@@ -1,26 +1,21 @@
 import "@/styles/globals.css";
-import { Analytics } from "@vercel/analytics/react";
-import { ABeeZee as TheFont } from "next/font/google";
-import { cookies } from "next/headers";
+
+import { Inter } from "next/font/google";
 
 import { TRPCReactProvider } from "@/trpc/react";
-import { ThemeProvider } from "@/components/providers/theme-provider";
-import { type Metadata } from "next";
-import NextAuthProvider from "@/lib/services/auth/provider";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { Toaster } from "@/components/ui/toaster";
+import NextAuthProvider from "@/lib/auth/Provider";
 
-const inter = TheFont({
-  weight: "400",
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Kidarr",
-  description: "Radar for your kids",
-  manifest: "/site.webmanifest",
-  icons: {
-    icon: "/favicon.ico",
-  },
+  description: "Radarr for your kids",
+  icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
 export default function RootLayout({
@@ -29,16 +24,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
+    <html lang="en" suppressHydrationWarning>
       <body className={`font-sans ${inter.variable}`}>
-        <NextAuthProvider>
-          <TRPCReactProvider cookies={cookies().toString()}>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              {children}
-              <Analytics />
-            </ThemeProvider>
-          </TRPCReactProvider>
-        </NextAuthProvider>
+        <TRPCReactProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <NextAuthProvider>{children}</NextAuthProvider>
+
+            <Toaster />
+          </ThemeProvider>
+        </TRPCReactProvider>
       </body>
     </html>
   );
