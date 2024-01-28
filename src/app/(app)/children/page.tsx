@@ -1,5 +1,5 @@
 import ChildList from "@/components/children/child-list";
-import NewChildModal from "@/components/children/ChildModal";
+import NewChildModal from "@/components/children/child-modal";
 import { api } from "@/trpc/server";
 import { checkAuth } from "@/lib/auth/utils";
 

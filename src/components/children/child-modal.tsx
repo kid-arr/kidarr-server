@@ -11,6 +11,7 @@ import {
 } from "../ui/dialog";
 import ChildForm from "./child-form";
 import { type Child } from "@/server/db/schema/children";
+import { Icons } from "../icons";
 
 export default function ChildModal({
   child,
@@ -46,10 +47,14 @@ export default function ChildModal({
           </Button>
         ) : (
           <Button
-            variant={editing ? "ghost" : "outline"}
-            size={editing ? "sm" : "icon"}
+            variant={editing ? "default" : "default"}
+            size={editing ? "sm" : "sm"}
           >
-            {editing ? "Edit" : "+"}
+            {editing ? (
+              <Icons.edit className="h-4 w-4" />
+            ) : (
+              <Icons.add className="h-4 w-4" />
+            )}
           </Button>
         )}
       </DialogTrigger>

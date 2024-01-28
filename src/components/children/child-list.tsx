@@ -49,9 +49,7 @@ const Child = ({ child }: { child: CompleteChild }) => {
       <TableCell className="text-right">
         <div className="space-x-1">
           <ConnectDeviceDialog child={child} />
-          <Button>
-            <Icons.edit className="mr-2 h-4 w-4" />
-          </Button>
+          <ChildModal child={child} />
         </div>
       </TableCell>
     </TableRow>
