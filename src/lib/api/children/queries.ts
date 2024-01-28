@@ -7,6 +7,7 @@ import {
   children,
 } from "@/server/db/schema/children";
 import { devices } from "@/server/db/schema/devices";
+import { pings } from "@/server/db/schema/pings";
 
 export const getChildren = async () => {
   const { session } = await getUserAuth();
@@ -14,6 +15,8 @@ export const getChildren = async () => {
     .select()
     .from(children)
     .where(eq(children.userId, session?.user.id!))
+    .innerJoin(devices, eq(devices.childId, children.id))
+    .innerJoin(pings, eq(pings.deviceId, devices.id))
     .orderBy(children.name);
   return { children: c.map((c) => ({ ...c, devices: [] })) };
 };
