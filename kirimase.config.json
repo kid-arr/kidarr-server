@@ -1,18 +1,18 @@
 {
   "hasSrc": true,
   "packages": [
-    "drizzle",
     "trpc",
-    "next-auth",
-    "shadcn-ui"
+    "shadcn-ui",
+    "drizzle",
+    "next-auth"
   ],
   "preferredPackageManager": "bun",
   "t3": true,
   "alias": "@",
   "rootPath": "src/",
-  "orm": "drizzle",
-  "auth": "next-auth",
   "componentLib": "shadcn-ui",
-  "provider": "node-postgres",
-  "driver": "pg"
+  "driver": "pg",
+  "provider": "postgresjs",
+  "orm": "drizzle",
+  "auth": "next-auth"
 }

@@ -1,17 +1,16 @@
-import React from 'react';
-import ChildSelectList from './child-select-list';
+import React from "react";
+import ChildSelectList from "./child-select-list";
 
-import AddChildComponent from './add-child-component';
-import type ChildModel from '@/lib/models/child';
+import { type CompleteChild } from "@/server/db/schema/children";
 
 type ChildrenFilterProps = {
-  kids: ChildModel[];
-}
+  kids: CompleteChild[];
+};
 const ChildrenFilter: React.FC<ChildrenFilterProps> = async ({ kids }) => {
   return (
-    <div className="flex flex-row space-x-2 justify-center items-center">
+    <div className="flex flex-row items-center justify-center space-x-2">
       <ChildSelectList kids={kids} />
-      <AddChildComponent />
+      {/* <AddChildComponent /> */}
     </div>
   );
 };

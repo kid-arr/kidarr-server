@@ -1,15 +1,11 @@
-import type { Config } from 'drizzle-kit';
-import { env } from '@/env';
+import type { Config } from "drizzle-kit";
+import { env } from "@/env.mjs";
 
-if (!env.DATABASE_URL) {
-  throw new Error('DATABASE_URL is missing');
-}
 export default {
-  // schema: './src/db',
-  schema: './src/server/db/schema.ts',
-  out: './drizzle',
-  driver: 'pg',
+  schema: "./src/server/db/schema",
+  out: "./src/server/db/migrations",
+  driver: "pg",
   dbCredentials: {
     connectionString: env.DATABASE_URL,
-  },
+  }
 } satisfies Config;

@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { buttonVariants } from "@/components/ui/button";
+import { signOut, useSession } from "next-auth/react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,8 +29,8 @@ const AuthHeader = () => {
       <DropdownMenuTrigger>
         <UserAvatar
           user={{
-            name: session?.user?.name || null,
-            image: session?.user?.image || null,
+            name: session?.user?.name ?? null,
+            image: session?.user?.image ?? null,
           }}
           className="h-6 w-6"
         />
