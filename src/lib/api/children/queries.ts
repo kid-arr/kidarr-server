@@ -1,24 +1,36 @@
-import { db } from "@/server/db/index";
 import { eq, and } from "drizzle-orm";
 import { getUserAuth } from "@/lib/auth/utils";
+import { db } from "@/server/db";
 import {
   type ChildId,
   childIdSchema,
   children,
 } from "@/server/db/schema/children";
-import { devices } from "@/server/db/schema/devices";
-import { pings } from "@/server/db/schema/pings";
 
 export const getChildren = async () => {
   const { session } = await getUserAuth();
-  const c = await db
-    .select()
-    .from(children)
-    .where(eq(children.userId, session?.user.id!))
-    .innerJoin(devices, eq(devices.childId, children.id))
-    .innerJoin(pings, eq(pings.deviceId, devices.id))
-    .orderBy(children.name);
-  return { children: c.map((c) => ({ ...c, devices: [] })) };
+  console.log("queries", "getChildren", session?.user.id!);
+  const c = await db.query.children.findMany({
+    where: (children, { eq }) => eq(children.userId, session?.user.id!),
+    orderBy: (children) => children.name,
+    with: {
+      devices: {
+        with: {
+          pings: true,
+        },
+      },
+    },
+  });
+  console.log("queries", "gotChildren", c);
+  return { children: c };
+  // const c = await db
+  //   .select()
+  //   .from(children)
+  //   .where(eq(children.userId, session?.user.id!))
+  //   .innerJoin(devices, eq(devices.childId, children.id))
+  //   .innerJoin(pings, eq(pings.deviceId, devices.id))
+  //   .orderBy(children.name);
+  // return c;
 };
 
 export const getChildById = async (id: ChildId) => {

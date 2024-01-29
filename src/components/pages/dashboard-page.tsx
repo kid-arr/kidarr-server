@@ -11,7 +11,7 @@ const DashboardPage = async () => {
   return (
     <div>
       <div className="flex flex-row justify-between">
-        <ChildrenFilter kids={children} />
+        <ChildrenFilter children={children} />
         <MapViewTypeSelector />
       </div>
       <div className="mt-4">

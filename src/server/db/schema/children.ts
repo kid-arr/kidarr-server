@@ -6,6 +6,8 @@ import { users } from "@/server/db/schema/auth";
 import { type getChildren } from "@/lib/api/children/queries";
 
 import { randomUUID } from "crypto";
+import { relations } from "drizzle-orm";
+import { devices } from "./devices";
 
 export const children = pgTable("children", {
   id: varchar("id", { length: 191 })
@@ -18,6 +20,9 @@ export const children = pgTable("children", {
     .references(() => users.id, { onDelete: "cascade" })
     .notNull(),
 });
+export const childrenRelations = relations(children, ({ many }) => ({
+  devices: many(devices),
+}));
 
 // Schema for children - used to validate API requests
 export const insertChildSchema = createInsertSchema(children);
