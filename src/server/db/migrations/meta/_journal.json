@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1705877584114,
+      "tag": "0000_slim_katie_power",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1705877897654,
+      "tag": "0001_sticky_frightful_four",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1706464847221,
+      "tag": "0002_abandoned_luckman",
+      "breakpoints": true
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/parentgrine-server.iml" filepath="$PROJECT_DIR$/.idea/parentgrine-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/kidarr-server.iml" filepath="$PROJECT_DIR$/.idea/kidarr-server.iml" />
     </modules>
   </component>
 </project>

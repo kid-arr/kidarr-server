@@ -1,7 +1,14 @@
-import NextAuth from "next-auth";
+import { DefaultSession } from "next-auth";
+import NextAuth from "next-auth/next";
+import { authOptions } from "@/lib/auth/utils";
 
-import { authOptions } from "@/server/auth";
+declare module "next-auth" {
+  interface Session {
+    user: DefaultSession["user"] & {
+      id: string;
+    };
+  }
+}
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

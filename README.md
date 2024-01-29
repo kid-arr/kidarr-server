@@ -1,64 +1,28 @@
-# Kidarr Server🚀
+# Create T3 App
 
-Welcome to Kidarr, the ultimate child location tracking app that prioritises safety and peace of mind for parents!
-🌟
+This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/kid-arr/kidarr-server)](https://github.com/kid-arr/kidarr-server/issues)
-[![GitHub stars](https://img.shields.io/github/stars/kid-arr/kidarr-server)](https://github.com/kid-arr/kidarr-server/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/kid-arr/kidarr-server)](https://github.com/kid-arr/kidarr-server/network)
+## What's next? How do I make an app with this?
 
-## Overview
+We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
 
-Kidarr is a secure and user-friendly mobile application designed to help parents keep track of their children's
-whereabouts in real-time. With advanced location tracking features, intuitive UI, and robust security measures,
-Kidarr provides parents with the peace of mind they deserve.
+If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
 
-## Features
+- [Next.js](https://nextjs.org)
+- [NextAuth.js](https://next-auth.js.org)
+- [Prisma](https://prisma.io)
+- [Tailwind CSS](https://tailwindcss.com)
+- [tRPC](https://trpc.io)
 
-- **Real-time Location Tracking**: Stay informed about your child's location at all times.
+## Learn More
 
-- **Geofencing**: Set up safe zones and receive notifications when your child enters or leaves predefined areas.
+To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
 
-- **SOS Alert**: In case of an emergency, your child can send an SOS alert with their current location.
+- [Documentation](https://create.t3.gg/)
+- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
 
-- **History Tracking**: View a detailed history of your child's movement over time.
+You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
 
-- **Privacy and Security**: We prioritize the privacy and security of your data. All communication is encrypted, and
-  location data is accessible only to authorized users.
+## How do I deploy this?
 
-## Getting Started
-
-### Prerequisites
-
-- iOS or Android device for your child
-- Web, iOS or Android device for the parent
-
-### Installation
-
-1. Clone the repository: `git clone https://github.com/kid-arr/kidarr-server.git`
-2. Follow the installation instructions in the [documentation](docs/INSTALL.md).
-
-## Usage
-
-1. Open the Kidarr app on your child's device.
-2. Log in with your parent account.
-3. Enjoy peace of mind by tracking your child's location.
-
-For more detailed instructions, check out our [User Guide](docs/UserGuide.md).
-
-## Contributing
-
-We welcome contributions from the community! Whether you're a developer, designer, or tester, your input is valuable.
-Check out our [contribution guidelines](CONTRIBUTING.md) for more information.
-
-## Support
-
-If you encounter any issues or have questions, feel free
-to [open an issue](https://github.com/kid-arr/kidarr-server/issues). We're here to help!
-
-## License
-
-Kidarr is licensed under the [MIT License](LICENSE).
-
-Happy tracking! 🌍✨
+Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.

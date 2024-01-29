@@ -1,11 +1,31 @@
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
-import * as schema from "./schema";
-import { env } from "@/env";
+import { env } from "@/env.mjs";
+import {
+  users,
+  accounts,
+  sessions,
+  verificationTokens,
+  children,
+  devices,
+  pings,
+  childrenRelations,
+  deviceRelations,
+  pingRelations,
+} from "@/server/db/schema/_root";
 
-const client = postgres(env.DATABASE_URL);
-export const db = drizzle(client, { schema });
-
-// console.log('DRIZZLE', 'migrating');
-// migrate(db, { migrationsFolder: 'drizzle' })
-//   .then(() => console.log('DRIZZLE', 'migrated'));
+export const client = postgres(env.DATABASE_URL);
+export const db = drizzle(client, {
+  schema: {
+    accounts,
+    sessions,
+    users,
+    children,
+    devices,
+    pings,
+    verificationTokens,
+    childrenRelations,
+    deviceRelations,
+    pingRelations,
+  },
+});

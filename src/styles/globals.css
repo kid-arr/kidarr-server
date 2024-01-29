@@ -3,92 +3,83 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-      --card: 283 36% 97%;
-      --ring: 283 93% 25%;
-      --input: 220 13% 91%;
-      --muted: 283 13% 92%;
-      --accent: 283 15% 81%;
-      --border: 220 13% 91%;
-      --popover: 283 36% 98%;
-      --primary: 283 93% 25%;
-      --secondary: 283 7% 90%;
-      --background: 283 36% 98%;
-      --foreground: 283 68% 2%;
-      --destructive: 4 84% 36%;
-      --card-foreground: 283 68% 1%;
-      --muted-foreground: 283 4% 37%;
-      --accent-foreground: 283 15% 21%;
-      --popover-foreground: 283 68% 2%;
-      --primary-foreground: 283 93% 85%;
-      --secondary-foreground: 283 7% 30%;
-      --destructive-foreground: 4 84% 96%;
-      --radius: 0.5rem;
-    }
-  
-    .dark {
-      --card: 283 47% 3%;
-      --ring: 283 93% 25%;
-      --input: 215 27.9% 16.9%;
-      --muted: 283 13% 8%;
-      --accent: 283 25% 17%;
-      --border: 215 27.9% 16.9%;
-      --popover: 283 47% 2%;
-      --primary: 283 93% 25%;
-      --secondary: 283 18% 12%;
-      --background: 283 47% 2%;
-      --foreground: 283 27% 98%;
-      --destructive: 4 84% 49%;
-      --card-foreground: 283 27% 99%;
-      --muted-foreground: 283 4% 63%;
-      --accent-foreground: 283 25% 77%;
-      --popover-foreground: 283 27% 98%;
-      --primary-foreground: 283 93% 85%;
-      --secondary-foreground: 283 18% 72%;
-      --destructive-foreground: 0 0% 100%;
-    }
+  :root {
+    --card: 258 70% 100%;
+    --ring: 258 58% 37%;
+    --input: 220 13% 91%;
+    --muted: 258 29% 85%;
+    --accent: 258 19% 81%;
+    --border: 220 13% 91%;
+    --popover: 258 70% 100%;
+    --primary: 258 58% 37%;
+    --secondary: 258 19% 81%;
+    --background: 258 70% 100%;
+    --foreground: 258 77% 0%;
+    --destructive: 19 98% 27%;
+    --card-foreground: 258 77% 0%;
+    --muted-foreground: 258 10% 40%;
+    --accent-foreground: 258 19% 21%;
+    --popover-foreground: 258 77% 0%;
+    --primary-foreground: 258 58% 97%;
+    --secondary-foreground: 258 19% 21%;
+    --destructive-foreground: 19 98% 87%;
+    --radius: 0.5rem;
   }
-@layer base {
-    * {
-        @apply border-border;
-    }
 
-    body {
-        @apply bg-background text-foreground;
-    }
+  .dark {
+    --card: 258 53% 3%;
+    --ring: 258 58% 37%;
+    --input: 215 27.9% 16.9%;
+    --muted: 258 29% 15%;
+    --accent: 258 15% 10%;
+    --border: 215 27.9% 16.9%;
+    --popover: 258 53% 3%;
+    --primary: 258 58% 37%;
+    --secondary: 258 15% 10%;
+    --background: 258 53% 3%;
+    --foreground: 258 40% 97%;
+    --destructive: 19 98% 46%;
+    --card-foreground: 258 40% 97%;
+    --muted-foreground: 258 10% 60%;
+    --accent-foreground: 258 15% 70%;
+    --popover-foreground: 258 40% 97%;
+    --primary-foreground: 258 58% 97%;
+    --secondary-foreground: 258 15% 70%;
+    --destructive-foreground: 0 0% 100%;
+  }
 }
 
 .map {
-    width: 100%;
-    height: 40rem;
+  width: 100%;
+  height: 40rem;
 }
 
 img.leaflet-marker-icon {
-    border-radius: 50%;
-    border: 2px solid red;
+  border-radius: 50%;
+  border: 2px solid red;
 }
 
 .leaflet-control {
-    z-index: 0 !important;
+  z-index: 0 !important;
 }
 
 .leaflet-pane {
-    z-index: 0 !important;
+  z-index: 0 !important;
 }
 
 .leaflet-top,
 .leaflet-bottom {
-    z-index: 0 !important;
+  z-index: 0 !important;
 }
 
 .leaflet-popup-content-wrapper {
-    border-radius: 0px;
-    padding: 0px !important;
+  border-radius: 0px;
+  padding: 0px !important;
 }
 
 .leaflet-popup-content {
-    padding: 0px !important;
-    border-radius: 0px !important;
-    margin-right: 0px !important;
-    margin-left: 0px !important;
+  padding: 0px !important;
+  border-radius: 0px !important;
+  margin-right: 0px !important;
+  margin-left: 0px !important;
 }

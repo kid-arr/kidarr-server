@@ -1,19 +1,22 @@
 "use client";
 
 import * as React from "react";
-import { redirect, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
-import type * as z from "zod";
 
 import { cn } from "@/lib/utils";
-import { userAuthSchema } from "@/lib/validations/auth";
 import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
+import { z } from "zod";
+
+const userAuthSchema = z.object({
+  email: z.string().email(),
+})
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 

@@ -1,12 +1,17 @@
-import { getServerAuthSession } from '@/server/auth';
-import HomePage from '@/components/pages/home-page';
-import { redirect } from 'next/navigation';
+
+import HomePage from "@/components/pages/home-page";
+import { getUserAuth } from "@/lib/auth/utils";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
-  const session = await getServerAuthSession();
-
-  if (session?.user) {
-    redirect('/dashboard');
+  const { session } = await getUserAuth();
+  if (session) {
+    redirect("/dashboard");
   }
-  return <HomePage />;
+
+  return (
+    <main className="space-y-4">
+      <HomePage />
+    </main>
+  );
 }
