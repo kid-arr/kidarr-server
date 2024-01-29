@@ -27,7 +27,25 @@ const MainMap: React.FC<MainMapProps> = ({ kids }) => {
         zoom={10}
         scrollWheelZoom={true}
       >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png">
+          <>
+            {kids?.map((kid) =>
+              kid.devices?.map((device) =>
+                device.pings.map((ping) => (
+                  <MapMarker
+                    key={ping.id}
+                    childName={kid.name}
+                    avatar={kid.avatar}
+                    deviceName={device.name}
+                    latitude={ping.latitude}
+                    longitude={ping.longitude}
+                    timestamp={ping.timestamp}
+                  />
+                )),
+              ),
+            )}
+          </>
+        </TileLayer>
       </MapContainer>
     </div>
   );

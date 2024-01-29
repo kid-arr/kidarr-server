@@ -11,6 +11,7 @@
     "start": "next start",
     "db:generate": "drizzle-kit generate:pg",
     "db:migrate": "tsx src/server/db/migrate.ts",
+    "db:seed": "tsx src/server/db/seed/seed.ts && tsx src/server/db/seed/auth.ts",
     "db:drop": "drizzle-kit drop",
     "db:pull": "drizzle-kit introspect:pg",
     "db:studio": "drizzle-kit studio",
@@ -19,6 +20,7 @@
   "dependencies": {
     "@auth/core": "^0.22.0",
     "@auth/drizzle-adapter": "^0.3.16",
+    "@faker-js/faker": "^8.4.0",
     "@hookform/resolvers": "^3.3.4",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",

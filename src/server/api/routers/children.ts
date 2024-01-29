@@ -2,7 +2,6 @@ import { getChildById, getChildren } from "@/lib/api/children/queries";
 import {
   publicProcedure,
   createTRPCRouter,
-  protectedProcedure,
 } from "@/server/api/trpc";
 import {
   childIdSchema,

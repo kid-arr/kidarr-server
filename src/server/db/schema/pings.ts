@@ -1,9 +1,4 @@
-import {
-  real,
-  timestamp,
-  varchar,
-  pgTable,
-} from "drizzle-orm/pg-core";
+import { real, timestamp, varchar, pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 import { devices } from "./devices";
@@ -11,6 +6,7 @@ import { users } from "@/server/db/schema/auth";
 import { type getPings } from "@/lib/api/pings/queries";
 
 import { randomUUID } from "crypto";
+import { relations } from "drizzle-orm";
 
 export const pings = pgTable("pings", {
   id: varchar("id", { length: 191 })
@@ -26,7 +22,12 @@ export const pings = pgTable("pings", {
     .references(() => users.id, { onDelete: "cascade" })
     .notNull(),
 });
-
+export const pingRelations = relations(pings, ({ one }) => ({
+  device: one(devices, {
+    fields: [pings.deviceId],
+    references: [devices.id],
+  }),
+}));
 // Schema for pings - used to validate API requests
 export const insertPingSchema = createInsertSchema(pings);
 

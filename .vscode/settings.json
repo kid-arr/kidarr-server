@@ -9,5 +9,6 @@
     ".vscode": true,
     ".next": true,
     "node_modules": true
-  }
+  },
+  "workbench.colorTheme": "poimandres-noitalics"
 }

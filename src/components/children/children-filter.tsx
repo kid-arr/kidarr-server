@@ -1,15 +1,19 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import ChildSelectList from "./child-select-list";
 
-import { type CompleteChild } from "@/server/db/schema/children";
+import { type Child } from "@/server/db/schema/children";
 
 type ChildrenFilterProps = {
-  kids: CompleteChild[];
+  children: Child[];
 };
-const ChildrenFilter: React.FC<ChildrenFilterProps> = async ({ kids }) => {
+const ChildrenFilter: React.FC<ChildrenFilterProps> = ({ children }) => {
+  useEffect(() => {
+    console.log("ChildrenFilter: useEffect", children);
+  }, [children]);
   return (
     <div className="flex flex-row items-center justify-center space-x-2">
-      <ChildSelectList kids={kids} />
+      <ChildSelectList children={children} />
       {/* <AddChildComponent /> */}
     </div>
   );
