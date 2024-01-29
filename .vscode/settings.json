@@ -10,5 +10,17 @@
     ".next": true,
     "node_modules": true
   },
-  "workbench.colorTheme": "poimandres-noitalics"
+  "workbench.colorTheme": "poimandres-noitalics",
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "kidarr (local)",
+      "database": "kidarr",
+      "username": "postgres",
+      "password": "hackme"
+    }
+  ]
 }

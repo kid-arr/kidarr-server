@@ -8,6 +8,7 @@ import {
   verificationTokens,
   children,
   devices,
+  pings,
   childrenRelations,
   deviceRelations,
   pingRelations,
@@ -16,11 +17,12 @@ import {
 export const client = postgres(env.DATABASE_URL);
 export const db = drizzle(client, {
   schema: {
-    devices,
-    children,
-    users,
     accounts,
     sessions,
+    users,
+    children,
+    devices,
+    pings,
     verificationTokens,
     childrenRelations,
     deviceRelations,

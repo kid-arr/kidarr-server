@@ -34,6 +34,7 @@ const MainMap: React.FC<MainMapProps> = ({ kids }) => {
                 device.pings.map((ping) => (
                   <MapMarker
                     key={ping.id}
+                    deviceId={device.id}
                     childName={kid.name}
                     avatar={kid.avatar}
                     deviceName={device.name}

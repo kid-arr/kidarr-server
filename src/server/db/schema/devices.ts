@@ -28,11 +28,11 @@ export const devices = pgTable("devices", {
     .notNull(),
 });
 export const deviceRelations = relations(devices, ({ one, many }) => ({
+  pings: many(pings),
   child: one(children, {
     fields: [devices.childId],
     references: [children.id],
   }),
-  pings: many(pings),
 }));
 
 // Schema for devices - used to validate API requests
