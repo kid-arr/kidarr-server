@@ -14,7 +14,6 @@ const ChildrenFilter: React.FC<ChildrenFilterProps> = ({ children }) => {
   return (
     <div className="flex flex-row items-center justify-center space-x-2">
       <ChildSelectList children={children} />
-      {/* <AddChildComponent /> */}
     </div>
   );
 };
