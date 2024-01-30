@@ -1,5 +1,5 @@
-'use client';
-import React from 'react';
+"use client";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -8,15 +8,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { Icons } from '../icons';
-import ConnectDeviceDialog from './connect-device-dialog';
-import type ChildModel from '@/lib/models/child';
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Icons } from "../icons";
+import ConnectDeviceDialog from "./connect-device-dialog";
+import { type CompleteChild } from "@/server/db/schema/children";
 
 type ChildrenListProps = {
-  kids: ChildModel[];
-}
+  kids: CompleteChild[];
+};
 const ChildrenList: React.FC<ChildrenListProps> = ({ kids }) => {
   return (
     <Table>
@@ -37,7 +37,7 @@ const ChildrenList: React.FC<ChildrenListProps> = ({ kids }) => {
               <div className="space-x-1">
                 <ConnectDeviceDialog child={kid} />
                 <Button>
-                  <Icons.edit className="w-4 h-4 mr-2" />
+                  <Icons.edit className="mr-2 h-4 w-4" />
                 </Button>
               </div>
             </TableCell>
