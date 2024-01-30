@@ -14,7 +14,7 @@ export const pings = pgTable("pings", {
     .$defaultFn(() => randomUUID()),
   latitude: real("latitude").notNull(),
   longitude: real("longitude").notNull(),
-  timestamp: timestamp("timestamp").notNull(),
+  timestamp: timestamp("timestamp").notNull().defaultNow(),
   deviceId: varchar("device_id", { length: 256 })
     .references(() => devices.id, { onDelete: "cascade" })
     .notNull(),
@@ -34,11 +34,11 @@ export const insertPingSchema = createInsertSchema(pings);
 export const insertPingParams = createSelectSchema(pings, {
   latitude: z.coerce.number(),
   longitude: z.coerce.number(),
-  timestamp: z.coerce.string().min(1),
   deviceId: z.coerce.string().min(1),
 }).omit({
   id: true,
   userId: true,
+  timestamp: true,
 });
 
 export const updatePingSchema = createSelectSchema(pings);
@@ -46,10 +46,10 @@ export const updatePingSchema = createSelectSchema(pings);
 export const updatePingParams = createSelectSchema(pings, {
   latitude: z.coerce.number(),
   longitude: z.coerce.number(),
-  timestamp: z.coerce.string().min(1),
   deviceId: z.coerce.string().min(1),
 }).omit({
   userId: true,
+  timestamp: true,
 });
 
 export const pingIdSchema = updatePingSchema.pick({ id: true });

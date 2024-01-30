@@ -1,10 +1,12 @@
 import { db } from "@/server/db";
 import { StatusCodes } from "http-status-codes";
-import { ping } from "@/server/db/schema";
 import { type NextApiResponseServerIo } from "@/lib/models/types/next-api-response-socket";
-import { badRequest, notAuthorised } from "@/app/api/responses";
 import { type NextApiRequest } from "next";
 import type LocationUpdate from "@/lib/models/location-update";
+import { badRequest, notAuthorised } from "@/lib/api/responses";
+import { getDeviceById } from "@/lib/api/devices/queries";
+import { getChildById } from "@/lib/api/children/queries";
+import { createPing } from "@/lib/api/pings/mutations";
 
 type PingRequest = {
   coordinates: {
@@ -27,25 +29,11 @@ export default async function POST(
     return notAuthorised();
   }
 
-  const device = await db.query.device.findFirst({
-    where: (device, { and, eq }) =>
-      and(eq(device.deviceId, deviceId), eq(device.apiKey, apiKey)),
-  });
+  const device = (await getDeviceById(deviceId)).device;
 
   if (!device) {
     return notAuthorised();
   }
-
-  const child = await db.query.child.findFirst({
-    where: (child, { eq }) => eq(child.id, device.childId),
-  });
-
-  if (!child) {
-    return notAuthorised();
-  }
-  const user = await db.query.users.findFirst({
-    where: (user, { eq }) => eq(user.id, child.parentId),
-  });
 
   const { coordinates } = req.body as PingRequest;
 
@@ -54,23 +42,14 @@ export default async function POST(
     return badRequest("Invalid coordinates");
   }
 
-  const location = await db.insert(ping).values({
+  const location = await createPing({
     deviceId: device.id,
     latitude: coordinates.latitude,
     longitude: coordinates.longitude,
-    timestamp: new Date(),
   });
 
-  const update: LocationUpdate = {
-    childId: child.id,
-    location: {
-      latitude: coordinates.latitude,
-      longitude: coordinates.longitude,
-    },
-    date: new Date(),
-  };
-  console.log("ping-route", `ping:${device.id}`, update);
-  res?.socket?.server?.io?.emit(`ping:${device.id}`, update);
+  console.log("ping-route", `ping:${device.id}`, location);
+  res?.socket?.server?.io?.emit(`ping:${device.id}`, location);
   // Send a response
-  return res.json({});
+  return res.json(location);
 }

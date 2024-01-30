@@ -1,21 +1,24 @@
 import { db } from "@/server/db/index";
 import { and, eq } from "drizzle-orm";
-import { 
-  PingId, 
-  NewPingParams,
-  UpdatePingParams, 
+import {
+  type PingId,
+  type NewPingParams,
+  type UpdatePingParams,
   updatePingSchema,
-  insertPingSchema, 
+  insertPingSchema,
   pings,
-  pingIdSchema 
+  pingIdSchema,
 } from "@/server/db/schema/pings";
 import { getUserAuth } from "@/lib/auth/utils";
 
 export const createPing = async (ping: NewPingParams) => {
   const { session } = await getUserAuth();
-  const newPing = insertPingSchema.parse({ ...ping, userId: session?.user.id! });
+  const newPing = insertPingSchema.parse({
+    ...ping,
+    userId: session?.user.id!,
+  });
   try {
-    const [p] =  await db.insert(pings).values(newPing).returning();
+    const [p] = await db.insert(pings).values(newPing).returning();
     return { ping: p };
   } catch (err) {
     const message = (err as Error).message ?? "Error, please try again";
@@ -27,13 +30,16 @@ export const createPing = async (ping: NewPingParams) => {
 export const updatePing = async (id: PingId, ping: UpdatePingParams) => {
   const { session } = await getUserAuth();
   const { id: pingId } = pingIdSchema.parse({ id });
-  const newPing = updatePingSchema.parse({ ...ping, userId: session?.user.id! });
+  const newPing = updatePingSchema.parse({
+    ...ping,
+    userId: session?.user.id!,
+  });
   try {
-    const [p] =  await db
-     .update(pings)
-     .set(newPing)
-     .where(and(eq(pings.id, pingId!), eq(pings.userId, session?.user.id!)))
-     .returning();
+    const [p] = await db
+      .update(pings)
+      .set(newPing)
+      .where(and(eq(pings.id, pingId), eq(pings.userId, session?.user.id!)))
+      .returning();
     return { ping: p };
   } catch (err) {
     const message = (err as Error).message ?? "Error, please try again";
@@ -46,8 +52,10 @@ export const deletePing = async (id: PingId) => {
   const { session } = await getUserAuth();
   const { id: pingId } = pingIdSchema.parse({ id });
   try {
-    const [p] =  await db.delete(pings).where(and(eq(pings.id, pingId!), eq(pings.userId, session?.user.id!)))
-    .returning();
+    const [p] = await db
+      .delete(pings)
+      .where(and(eq(pings.id, pingId), eq(pings.userId, session?.user.id!)))
+      .returning();
     return { ping: p };
   } catch (err) {
     const message = (err as Error).message ?? "Error, please try again";
@@ -55,4 +63,3 @@ export const deletePing = async (id: PingId) => {
     throw { error: message };
   }
 };
-
