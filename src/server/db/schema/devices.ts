@@ -1,9 +1,4 @@
-import {
-  varchar,
-  pgTable,
-  PgColumn,
-  PgTableWithColumns,
-} from "drizzle-orm/pg-core";
+import { varchar, pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 import { children } from "./children";

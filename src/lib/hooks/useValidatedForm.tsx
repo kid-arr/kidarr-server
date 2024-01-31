@@ -1,7 +1,7 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import { ZodSchema } from "zod";
+import { type FormEvent, useState } from "react";
+import { type ZodSchema } from "zod";
 
 type EntityZodErrors<T> = Partial<Record<keyof T, string[] | undefined>>;
 
@@ -12,7 +12,7 @@ export function useValidatedForm<Entity>(insertEntityZodSchema: ZodSchema) {
     Object.values(errors).some((error) => error !== undefined);
 
   const handleChange = (event: FormEvent<HTMLFormElement>) => {
-    const target = event.target as EventTarget;
+    const target = event.target;
     if (
       target instanceof HTMLInputElement ||
       target instanceof HTMLSelectElement ||

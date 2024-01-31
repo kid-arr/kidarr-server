@@ -3,9 +3,9 @@ import "leaflet/dist/leaflet.css";
 import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import MapMarker from "@/components/maps/map-marker";
-import { Child, type CompleteChild } from "@/server/db/schema/children";
-import { Ping } from "@/server/db/schema/pings";
-import { Device } from "@/server/db/schema/devices";
+import { type Child, type CompleteChild } from "@/server/db/schema/children";
+import { type Ping } from "@/server/db/schema/pings";
+import { type Device } from "@/server/db/schema/devices";
 import { getLatestPing } from "@/lib/helpers/location/ping";
 
 type MainMapProps = {

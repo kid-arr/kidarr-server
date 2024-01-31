@@ -1,5 +1,5 @@
 "use client";
-import { CompleteDevice } from "@/server/db/schema/devices";
+import { type CompleteDevice } from "@/server/db/schema/devices";
 import { api as trpc } from "@/trpc/react";
 import DeviceModal from "./DeviceModal";
 

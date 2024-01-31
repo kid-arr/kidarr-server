@@ -1,6 +1,6 @@
 "use client";
 
-import { Device, NewDeviceParams, insertDeviceParams } from "@/server/db/schema/devices";
+import { type Device, type NewDeviceParams, insertDeviceParams } from "@/server/db/schema/devices";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { api as trpc } from "@/trpc/react";
 import { Button } from "@/components/ui/button";
-import { z } from "zod";
+import { type z } from "zod";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
