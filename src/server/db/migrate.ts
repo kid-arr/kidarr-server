@@ -9,6 +9,7 @@ const runMigrate = async () => {
     throw new Error("DATABASE_URL is not defined");
   }
 
+  console.log("Migrating", env.DATABASE_URL, process.env.NODE_ENV);
   const connection = postgres(env.DATABASE_URL, { max: 1 });
 
   const db = drizzle(connection);
