@@ -1,24 +1,33 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 "use client";
 import "leaflet/dist/leaflet.css";
-import React, { useEffect, useState } from "react";
-import {
-  MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
-  Circle,
-  Polyline,
-} from "react-leaflet";
-import { usePingSocket } from "@/lib/hooks/use-ping-socket";
+import React from "react";
+import { MapContainer, TileLayer } from "react-leaflet";
 import MapMarker from "@/components/maps/map-marker";
+import { Child, type CompleteChild } from "@/server/db/schema/children";
+import { Ping } from "@/server/db/schema/pings";
+import { Device } from "@/server/db/schema/devices";
 import { getLatestPing } from "@/lib/helpers/location/ping";
-import { type CompleteChild } from "@/server/db/schema/children";
 
 type MainMapProps = {
   kids: CompleteChild[];
+  mode: "latest" | "route";
 };
-const MainMap: React.FC<MainMapProps> = ({ kids }) => {
+
+const _renderMarker = (ping: Ping, device: Device, child: Child) => {
+  return (
+    <MapMarker
+      key={ping.id}
+      deviceId={device.id}
+      childName={child.name}
+      avatar={child.avatar}
+      deviceName={device.name}
+      latitude={ping.latitude}
+      longitude={ping.longitude}
+      timestamp={ping.timestamp}
+    />
+  );
+};
+const MainMap: React.FC<MainMapProps> = ({ kids, mode }) => {
   return (
     <div>
       <MapContainer
@@ -30,18 +39,12 @@ const MainMap: React.FC<MainMapProps> = ({ kids }) => {
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {kids?.map((kid) =>
           kid.devices?.map((device) =>
-            device.pings.map((ping) => (
-              <MapMarker
-                key={ping.id}
-                deviceId={device.id}
-                childName={kid.name}
-                avatar={kid.avatar}
-                deviceName={device.name}
-                latitude={ping.latitude}
-                longitude={ping.longitude}
-                timestamp={ping.timestamp}
-              />
-            )),
+            mode === "route"
+              ? device.pings.map(
+                  (ping) =>
+                    device.pings.length > 0 && _renderMarker(ping, device, kid),
+                )
+              : _renderMarker(getLatestPing(device.pings)!, device, kid),
           ),
         )}
       </MapContainer>

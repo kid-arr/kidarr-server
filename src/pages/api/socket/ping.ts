@@ -1,11 +1,8 @@
-import { db } from "@/server/db";
 import { StatusCodes } from "http-status-codes";
 import { type NextApiResponseServerIo } from "@/lib/models/types/next-api-response-socket";
 import { type NextApiRequest } from "next";
-import type LocationUpdate from "@/lib/models/location-update";
 import { badRequest, notAuthorised } from "@/lib/api/responses";
 import { getDeviceById } from "@/lib/api/devices/queries";
-import { getChildById } from "@/lib/api/children/queries";
 import { createPing } from "@/lib/api/pings/mutations";
 
 type PingRequest = {

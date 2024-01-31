@@ -1,10 +1,15 @@
+"use client";
+import React from "react";
 import dynamic from "next/dynamic";
-import { api } from "@/trpc/server";
 import ChildrenFilter from "../children/children-filter";
 import { MapViewTypeSelector } from "../maps/map-viewtype-selector";
+import { CompleteChild } from "@/server/db/schema/children";
 
-const DashboardPage = async () => {
-  const { children } = await api.children.getChildren.query();
+type DashboardPageProps = {
+  children: CompleteChild[];
+};
+const DashboardPage: React.FC<DashboardPageProps> = ({ children }) => {
+  const [mode, setMode] = React.useState<"latest" | "route">("latest");
   const Map = dynamic(() => import("@/components/maps/main-map"), {
     ssr: false,
   });
@@ -12,10 +17,13 @@ const DashboardPage = async () => {
     <div>
       <div className="flex flex-row justify-between">
         <ChildrenFilter children={children} />
-        <MapViewTypeSelector />
+        <MapViewTypeSelector
+          currentView={mode}
+          onChange={(mode) => setMode(mode)}
+        />
       </div>
       <div className="mt-4">
-        <Map kids={children} />
+        <Map kids={children} mode={mode} />
       </div>
     </div>
   );

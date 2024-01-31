@@ -2,8 +2,9 @@ import { db } from "@/server/db/index";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { DefaultSession, getServerSession, NextAuthOptions } from "next-auth";
 import { redirect } from "next/navigation";
-import { env } from "@/env.mjs";
 import GoogleProvider from "next-auth/providers/google";
+import { Adapter } from "next-auth/adapters";
+import { env } from "@/env";
 
 declare module "next-auth" {
   interface Session {
@@ -24,7 +25,7 @@ export type AuthSession = {
 };
 
 export const authOptions: NextAuthOptions = {
-  adapter: DrizzleAdapter(db),
+  adapter: DrizzleAdapter(db) as Adapter,
   callbacks: {
     session: ({ session, user }) => {
       session.user.id = user.id;

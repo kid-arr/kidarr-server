@@ -1,21 +1,24 @@
 import { db } from "@/server/db/index";
 import { and, eq } from "drizzle-orm";
-import { 
-  DeviceId, 
-  NewDeviceParams,
-  UpdateDeviceParams, 
+import {
+  type DeviceId,
+  type NewDeviceParams,
+  type UpdateDeviceParams,
   updateDeviceSchema,
-  insertDeviceSchema, 
+  insertDeviceSchema,
   devices,
-  deviceIdSchema 
+  deviceIdSchema,
 } from "@/server/db/schema/devices";
 import { getUserAuth } from "@/lib/auth/utils";
 
 export const createDevice = async (device: NewDeviceParams) => {
   const { session } = await getUserAuth();
-  const newDevice = insertDeviceSchema.parse({ ...device, userId: session?.user.id! });
+  const newDevice = insertDeviceSchema.parse({
+    ...device,
+    userId: session?.user.id!,
+  });
   try {
-    const [d] =  await db.insert(devices).values(newDevice).returning();
+    const [d] = await db.insert(devices).values(newDevice).returning();
     return { device: d };
   } catch (err) {
     const message = (err as Error).message ?? "Error, please try again";
@@ -24,16 +27,24 @@ export const createDevice = async (device: NewDeviceParams) => {
   }
 };
 
-export const updateDevice = async (id: DeviceId, device: UpdateDeviceParams) => {
+export const updateDevice = async (
+  id: DeviceId,
+  device: UpdateDeviceParams,
+) => {
   const { session } = await getUserAuth();
   const { id: deviceId } = deviceIdSchema.parse({ id });
-  const newDevice = updateDeviceSchema.parse({ ...device, userId: session?.user.id! });
+  const newDevice = updateDeviceSchema.parse({
+    ...device,
+    userId: session?.user.id!,
+  });
   try {
-    const [d] =  await db
-     .update(devices)
-     .set(newDevice)
-     .where(and(eq(devices.id, deviceId!), eq(devices.userId, session?.user.id!)))
-     .returning();
+    const [d] = await db
+      .update(devices)
+      .set(newDevice)
+      .where(
+        and(eq(devices.id, deviceId), eq(devices.userId, session?.user.id!)),
+      )
+      .returning();
     return { device: d };
   } catch (err) {
     const message = (err as Error).message ?? "Error, please try again";
@@ -46,8 +57,12 @@ export const deleteDevice = async (id: DeviceId) => {
   const { session } = await getUserAuth();
   const { id: deviceId } = deviceIdSchema.parse({ id });
   try {
-    const [d] =  await db.delete(devices).where(and(eq(devices.id, deviceId!), eq(devices.userId, session?.user.id!)))
-    .returning();
+    const [d] = await db
+      .delete(devices)
+      .where(
+        and(eq(devices.id, deviceId), eq(devices.userId, session?.user.id!)),
+      )
+      .returning();
     return { device: d };
   } catch (err) {
     const message = (err as Error).message ?? "Error, please try again";
@@ -55,4 +70,3 @@ export const deleteDevice = async (id: DeviceId) => {
     throw { error: message };
   }
 };
-
