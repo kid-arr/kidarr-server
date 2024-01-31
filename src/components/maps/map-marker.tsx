@@ -47,7 +47,6 @@ const MapMarker: React.FC<MapMarkerProps> = ({
   usePingSocket({
     deviceId: deviceId,
     locationUpdate: (ping) => {
-      console.log("MainMap", "locationUpdate", ping);
       setPosition([ping.location.latitude, ping.location.longitude]);
     },
   });

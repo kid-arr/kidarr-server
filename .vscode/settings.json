@@ -11,6 +11,7 @@
     "node_modules": true
   },
   "workbench.colorTheme": "poimandres-noitalics",
+  "editor.fontFamily": "DejaVu Sans Mono",
   "sqltools.connections": [
     {
       "previewLimit": 50,

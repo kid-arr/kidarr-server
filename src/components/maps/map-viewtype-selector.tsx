@@ -3,15 +3,23 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Icons } from "@/components/icons";
 import React from "react";
 
-export const MapViewTypeSelector = () => {
-  const [currentView, setCurrentView] = React.useState("location");
+type MapViewTypeSelectorProps = {
+  currentView: "latest" | "route";
+  onChange: (mode: "latest" | "route") => void;
+};
+export const MapViewTypeSelector: React.FC<MapViewTypeSelectorProps> = ({
+  currentView,
+  onChange,
+}) => {
   return (
     <ToggleGroup
       type="single"
       value={currentView}
-      onValueChange={(value) => setCurrentView(value)}
+      onValueChange={(value) =>
+        onChange(value === "latest" ? "latest" : "route")
+      }
     >
-      <ToggleGroupItem value="location">
+      <ToggleGroupItem value="latest">
         <Icons.location className="mr-1 h-4 w-4" />
         Location
       </ToggleGroupItem>
