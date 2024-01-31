@@ -3,7 +3,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import ChildrenFilter from "../children/children-filter";
 import { MapViewTypeSelector } from "../maps/map-viewtype-selector";
-import { CompleteChild } from "@/server/db/schema/children";
+import { type CompleteChild } from "@/server/db/schema/children";
 
 type DashboardPageProps = {
   children: CompleteChild[];

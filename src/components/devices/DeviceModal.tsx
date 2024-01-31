@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import DeviceForm from "./DeviceForm";
-import { Device } from "@/server/db/schema/devices";
+import { type Device } from "@/server/db/schema/devices";
 
 export default function DeviceModal({ 
   device,
