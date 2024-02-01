@@ -84,41 +84,19 @@ const MapMarker: React.FC<MapMarkerProps> = ({
                 <Icons.close />
               </Button>
             </CardHeader>
-            {/*<CardHeader>*/}
-            {/*  <div className="flex items-center gap-4">*/}
-            {/*    <Avatar className="h-12 w-12">*/}
-            {/*      <AvatarImage src={_getAvatarImage(avatar)} alt={childName} />*/}
-            {/*      <AvatarFallback>{getInitials(childName)}</AvatarFallback>*/}
-            {/*    </Avatar>*/}
-            {/*    <div className="grid gap-1">*/}
-            {/*      <div className="flex flex-col">*/}
-            {/*        <div className="text-lg font-bold">{childName}</div>*/}
-            {/*        <Button variant="link">*/}
-            {/*          <Icons.close />*/}
-            {/*        </Button>*/}
-            {/*      </div>*/}
-            {/*      <div className="text-sm text-gray-500 dark:text-gray-400">*/}
-            {/*        <div className="flex flex-col items-center space-x-3 px-2">*/}
-            {/*          <Icons.device /> {deviceName}*/}
-            {/*        </div>*/}
-            {/*      </div>*/}
-            {/*    </div>*/}
-            {/*  </div>*/}
-            {/*</CardHeader>*/}
-            <CardContent>
+            <CardContent className="mx-6 p-2">
               <div className="flex flex-row items-center space-x-3 pb-2">
                 <Icons.device /> {deviceName}
               </div>
-
               <div className="text-sm text-gray-500 dark:text-gray-400">
                 Last seen - {humanizeDate(timestamp)}
               </div>
             </CardContent>
-            <CardFooter className="flex justify-end gap-4">
-              <Link className="text-primary" href="#">
-                <Icons.message className="h-6 w-6" />
+            <CardFooter className="text- flex justify-end gap-4">
+              <Link href="#">
+                <Icons.message className="h-6 w-6 text-secondary-foreground" />
               </Link>
-              <Link className="text-primary" href="#">
+              <Link href="#">
                 <Icons.call className="h-6 w-6" />
               </Link>
             </CardFooter>
