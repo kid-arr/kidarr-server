@@ -15,6 +15,7 @@ export const MapViewTypeSelector: React.FC<MapViewTypeSelectorProps> = ({
     <ToggleGroup
       type="single"
       value={currentView}
+      variant={"outline"}
       onValueChange={(value) =>
         onChange(value === "latest" ? "latest" : "route")
       }

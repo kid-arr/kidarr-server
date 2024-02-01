@@ -13,21 +13,21 @@ type MainMapProps = {
   mode: "latest" | "route";
 };
 
-const _renderMarker = (ping: Ping, device: Device, child: Child) => {
-  return (
-    <MapMarker
-      key={ping.id}
-      deviceId={device.id}
-      childName={child.name}
-      avatar={child.avatar}
-      deviceName={device.name}
-      latitude={ping.latitude}
-      longitude={ping.longitude}
-      timestamp={ping.timestamp}
-    />
-  );
-};
 const MainMap: React.FC<MainMapProps> = ({ kids, mode }) => {
+  const _renderMarker = (ping: Ping, device: Device, child: Child) => {
+    return (
+      <MapMarker
+        key={ping.id}
+        deviceId={device.id}
+        childName={child.name}
+        avatar={child.avatar}
+        deviceName={device.name}
+        latitude={ping.latitude}
+        longitude={ping.longitude}
+        timestamp={ping.timestamp}
+      />
+    );
+  };
   return (
     <div>
       <MapContainer
@@ -36,7 +36,7 @@ const MainMap: React.FC<MainMapProps> = ({ kids, mode }) => {
         zoom={10}
         scrollWheelZoom={true}
       >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {kids?.map((kid) =>
           kid.devices?.map((device) =>
             mode === "route"
