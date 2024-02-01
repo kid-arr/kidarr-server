@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React from "react";
 import { headers } from "next/headers";
-import { getRequestHeaders } from "@/lib/helpers/headers";
+import { getRequestHeaders } from "@/components/headers";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 const HeadersPrinter = () => {
