@@ -1,17 +1,24 @@
-import React from "react";
+import React, {
+  ForwardRefExoticComponent,
+  RefAttributes,
+  RefObject,
+} from "react";
 import L from "leaflet";
-import { Marker, Popup } from "react-leaflet";
+import { Marker, Popup, PopupProps } from "react-leaflet";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { Icons } from "@/components/icons";
 import { usePingSocket } from "@/lib/hooks/use-ping-socket";
 import { getInitials } from "@/lib/helpers/name";
+import { Bold } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type MapMarkerProps = {
   childName: string;
@@ -44,34 +51,64 @@ const MapMarker: React.FC<MapMarkerProps> = ({
     latitude,
     longitude,
   ]);
+
+  const popup = React.createRef<any>();
+
   usePingSocket({
     deviceId: deviceId,
     locationUpdate: (ping) => {
       setPosition([ping.location.latitude, ping.location.longitude]);
     },
   });
+
+  const _closePopup = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+    popup?.current?._source.closePopup();
+  };
+
   return (
     <div className="animate-spin">
       <Marker position={position} icon={_getIcon(avatar)}>
-        <Popup>
+        <Popup closeButton={false} ref={popup}>
           <Card className="grid w-full max-w-md gap-4">
-            <CardHeader>
-              <div className="flex items-center gap-4">
-                <Avatar className="h-12 w-12">
-                  <AvatarImage src={_getAvatarImage(avatar)} alt={childName} />
-                  <AvatarFallback>{getInitials(childName)}</AvatarFallback>
-                </Avatar>
-                <div className="grid gap-1">
-                  <div className="text-lg font-bold">{childName}</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    <div className="flex flex-row items-center space-x-3 px-2">
-                      <Icons.device /> {deviceName}
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 p-2 pb-2">
+              <Avatar className="h-6 w-6">
+                <AvatarImage src={_getAvatarImage(avatar)} alt={childName} />
+                <AvatarFallback>{getInitials(childName)}</AvatarFallback>
+              </Avatar>
+              <CardTitle className="text-sm font-semibold leading-none tracking-tight">
+                {childName}
+              </CardTitle>
+              <Button variant="ghost" size="icon" onClick={_closePopup}>
+                <Icons.close />
+              </Button>
             </CardHeader>
+            {/*<CardHeader>*/}
+            {/*  <div className="flex items-center gap-4">*/}
+            {/*    <Avatar className="h-12 w-12">*/}
+            {/*      <AvatarImage src={_getAvatarImage(avatar)} alt={childName} />*/}
+            {/*      <AvatarFallback>{getInitials(childName)}</AvatarFallback>*/}
+            {/*    </Avatar>*/}
+            {/*    <div className="grid gap-1">*/}
+            {/*      <div className="flex flex-col">*/}
+            {/*        <div className="text-lg font-bold">{childName}</div>*/}
+            {/*        <Button variant="link">*/}
+            {/*          <Icons.close />*/}
+            {/*        </Button>*/}
+            {/*      </div>*/}
+            {/*      <div className="text-sm text-gray-500 dark:text-gray-400">*/}
+            {/*        <div className="flex flex-col items-center space-x-3 px-2">*/}
+            {/*          <Icons.device /> {deviceName}*/}
+            {/*        </div>*/}
+            {/*      </div>*/}
+            {/*    </div>*/}
+            {/*  </div>*/}
+            {/*</CardHeader>*/}
             <CardContent>
+              <div className="flex flex-row items-center space-x-3 pb-2">
+                <Icons.device /> {deviceName}
+              </div>
+
               <div className="text-sm text-gray-500 dark:text-gray-400">
                 Last seen -{" "}
                 {timestamp.toLocaleDateString() +

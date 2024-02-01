@@ -6,7 +6,13 @@ import React from "react";
 const DebugPage = () => {
   return (
     <div className="p-8">
-      <Button variant="default">I am button</Button>
+      <Button variant="default">default</Button>
+      <Button variant="secondary">secondary</Button>
+      <Button variant="ghost">ghost</Button>
+      <Button variant="destructive">destructive</Button>
+      <Button variant="link">link</Button>
+      <Button variant="outline">outline</Button>
+
       <div className="flex flex-col space-y-2 px-2">
         {/*<HeadersPrinter />*/}
         {/*<SecureDebugDetails />*/}
