@@ -19,6 +19,7 @@ import { usePingSocket } from "@/lib/hooks/use-ping-socket";
 import { getInitials } from "@/lib/helpers/name";
 import { Bold } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { humanizeDate } from "@/lib/helpers/date";
 
 type MapMarkerProps = {
   childName: string;
@@ -110,10 +111,7 @@ const MapMarker: React.FC<MapMarkerProps> = ({
               </div>
 
               <div className="text-sm text-gray-500 dark:text-gray-400">
-                Last seen -{" "}
-                {timestamp.toLocaleDateString() +
-                  " " +
-                  timestamp.toLocaleTimeString()}
+                Last seen - {humanizeDate(timestamp)}
               </div>
             </CardContent>
             <CardFooter className="flex justify-end gap-4">
