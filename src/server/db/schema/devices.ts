@@ -14,6 +14,7 @@ export const devices = pgTable("devices", {
     .primaryKey()
     .$defaultFn(() => randomUUID()),
   name: varchar("name", { length: 256 }).notNull(),
+  apiKey: varchar("api_key", { length: 256 }).notNull(),
   deviceId: varchar("device_id", { length: 256 }).notNull(),
   childId: varchar("child_id", { length: 256 })
     .references(() => children.id, { onDelete: "cascade" })
