@@ -4,7 +4,7 @@ import { type DefaultSession, getServerSession, type NextAuthOptions } from "nex
 import { redirect } from "next/navigation";
 import GoogleProvider from "next-auth/providers/google";
 import { type Adapter } from "next-auth/adapters";
-import { env } from "@/env";
+import { env } from "@/env.cjs";
 
 declare module "next-auth" {
   interface Session {

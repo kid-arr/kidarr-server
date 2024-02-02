@@ -2,7 +2,7 @@ import { type Session } from "next-auth";
 import { type ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/headers";
 import React from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { env } from "@/env";
+import { env } from "@/env.cjs";
 
 type PrintEnvProps = {
   session: Session | null;
