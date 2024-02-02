@@ -1,10 +1,6 @@
-import React, {
-  ForwardRefExoticComponent,
-  RefAttributes,
-  RefObject,
-} from "react";
+import React from "react";
 import L from "leaflet";
-import { Marker, Popup, PopupProps } from "react-leaflet";
+import { Marker, Popup } from "react-leaflet";
 import {
   Card,
   CardContent,
@@ -17,7 +13,6 @@ import Link from "next/link";
 import { Icons } from "@/components/icons";
 import { usePingSocket } from "@/lib/hooks/use-ping-socket";
 import { getInitials } from "@/lib/helpers/name";
-import { Bold } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { humanizeDate } from "@/lib/helpers/date";
 
@@ -53,6 +48,7 @@ const MapMarker: React.FC<MapMarkerProps> = ({
     longitude,
   ]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const popup = React.createRef<any>();
 
   usePingSocket({

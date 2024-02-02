@@ -5,14 +5,10 @@ import ChildModal from "./child-modal";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Icons } from "@/components/icons";
+  TableRow,} from "@/components/ui/table";
 import ConnectDeviceDialog from "@/components/children/connect-device-dialog";
 
 export default function ChildList({ children }: { children: CompleteChild[] }) {

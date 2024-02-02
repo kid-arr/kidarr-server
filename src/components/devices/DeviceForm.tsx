@@ -73,17 +73,17 @@ const DeviceForm = ({
 
   const { mutate: createDevice, isLoading: isCreating } =
     trpc.devices.createDevice.useMutation({
-      onSuccess: (res) => onSuccess("create"),
+      onSuccess: (_res) => onSuccess("create"),
     });
 
   const { mutate: updateDevice, isLoading: isUpdating } =
     trpc.devices.updateDevice.useMutation({
-      onSuccess: (res) => onSuccess("update"),
+      onSuccess: (_res) => onSuccess("update"),
     });
 
   const { mutate: deleteDevice, isLoading: isDeleting } =
     trpc.devices.deleteDevice.useMutation({
-      onSuccess: (res) => onSuccess("delete"),
+      onSuccess: (_res) => onSuccess("delete"),
     });
 
   const handleSubmit = (values: NewDeviceParams) => {

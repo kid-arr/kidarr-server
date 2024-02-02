@@ -7,12 +7,10 @@ import {
   Loader2,
   MessageCircleMore,
   Moon,
-  PlusCircle,
   SunMedium,
-  Twitter,
+  Twitter, //get fucked, I will call this X when I have to and not before
   User,
   Rocket,
-  PlusCircleIcon,
   PlusIcon,
   LogIn,
   Save,
