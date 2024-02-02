@@ -17,6 +17,7 @@ import {
   Copy,
   Cable,
   Edit,
+  Edit2,
   Radar,
   PhoneCall,
   Smartphone,

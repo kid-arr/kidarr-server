@@ -8,8 +8,7 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+  TableRow,} from "@/components/ui/table";
 import ConnectDeviceDialog from "@/components/children/connect-device-dialog";
 
 export default function ChildList({ children }: { children: CompleteChild[] }) {
