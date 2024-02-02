@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import ChildrenFilter from "../children/children-filter";
 import { MapViewTypeSelector } from "../maps/map-viewtype-selector";
 import { type CompleteChild } from "@/server/db/schema/children";
-import { Button } from "@/components/ui/button";
 
 const Map = dynamic(() => import("@/components/maps/main-map"), {
   ssr: false,

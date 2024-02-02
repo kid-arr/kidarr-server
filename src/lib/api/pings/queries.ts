@@ -1,7 +1,6 @@
 import { db } from "@/server/db/index";
-import { eq, and } from "drizzle-orm";
 import { getUserAuth } from "@/lib/auth/utils";
-import { type PingId, pingIdSchema, pings } from "@/server/db/schema/pings";
+import { type PingId, pingIdSchema } from "@/server/db/schema/pings";
 
 export const getPings = async () => {
   const { session } = await getUserAuth();

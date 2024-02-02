@@ -8,7 +8,7 @@ type DeviceConnectRequest = {
   childId: string;
   deviceName: string;
 };
-const POST = async (req: Request, res: Response) => {
+export const POST = async (req: Request, res: Response) => {
   if (req.method !== "POST") {
     return badRequest("Invalid method");
   }

@@ -5,8 +5,6 @@ import { Icons } from '@/components/icons';
 import { useSocket } from '@/lib/services/realtime/socket-provider';
 const PresenceIndicator = () => {
   const { isConnected } = useSocket();
-
-  const [isOnline, setIsOnline] = React.useState(true);
   return (
     <span className='relative inline-flex'>
       <Button variant='ghost' size='icon'>
