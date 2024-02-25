@@ -10,6 +10,9 @@ import {
 export const getChildren = async () => {
   const { session } = await getUserAuth();
   console.log("queries", "getChildren", session?.user.id!);
+
+  //TODO: We can actually use innerJoin here 
+  //and destructure the args...
   const c = await db.query.children.findMany({
     where: (children, { eq }) => eq(children.userId, session?.user.id!),
     orderBy: (children) => children.name,

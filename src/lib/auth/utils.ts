@@ -1,10 +1,14 @@
 import { db } from "@/server/db/index";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import { type DefaultSession, getServerSession, type NextAuthOptions } from "next-auth";
+import {
+  type DefaultSession,
+  getServerSession,
+  type NextAuthOptions,
+} from "next-auth";
 import { redirect } from "next/navigation";
 import GoogleProvider from "next-auth/providers/google";
 import { type Adapter } from "next-auth/adapters";
-import { env } from "@/env.cjs";
+import { env } from "@/env";
 
 declare module "next-auth" {
   interface Session {
