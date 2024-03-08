@@ -24,7 +24,15 @@ export const getDeviceById = async (id: DeviceId) => {
   const [d] = await db
     .select()
     .from(devices)
-    .where(and(eq(devices.id, deviceId), eq(devices.userId, session?.user.id!)))
-    // .leftJoin(children, eq(devices.childId, children.id));
-  return { device: d };
+    .where(
+      and(eq(devices.id, deviceId), eq(devices.userId, session?.user.id!)),
+    );
+  return d;
+};
+export const getDeviceByApiKey = async (apiKey: string, deviceId: string) => {
+  const [d] = await db
+    .select()
+    .from(devices)
+    .where(and(eq(devices.apiKey, apiKey), eq(devices.deviceId, deviceId)));
+  return d;
 };

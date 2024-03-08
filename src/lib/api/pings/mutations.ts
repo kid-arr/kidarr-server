@@ -11,11 +11,10 @@ import {
 } from "@/server/db/schema/pings";
 import { getUserAuth } from "@/lib/auth/utils";
 
-export const createPing = async (ping: NewPingParams) => {
-  const { session } = await getUserAuth();
+export const createPing = async (ping: NewPingParams, userId: string) => {
   const newPing = insertPingSchema.parse({
     ...ping,
-    userId: session?.user.id!,
+    userId: userId,
   });
   try {
     const [p] = await db.insert(pings).values(newPing).returning();
