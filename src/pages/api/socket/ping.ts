@@ -1,3 +1,4 @@
+"use server";
 import { StatusCodes } from "http-status-codes";
 import { type NextApiResponseServerIo } from "@/lib/models/types/next-api-response-socket";
 import { type NextApiRequest } from "next";
@@ -26,7 +27,7 @@ export default async function POST(
     return notAuthorised();
   }
 
-  const device = (await getDeviceById(deviceId)).device;
+  const device = await getDeviceById(deviceId);
 
   if (!device) {
     return notAuthorised();
