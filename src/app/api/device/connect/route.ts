@@ -1,7 +1,8 @@
-import { getChildById } from "@/lib/api/children/queries";
-import { badRequest } from "@/lib/api/responses";
+import { getChildById, getChildById__Unsafe } from "@/lib/api/children/queries";
+import { badRequest, created } from "@/lib/api/responses";
 import { createApiKey } from "@/lib/services/auth/api-key";
 import { createDevice } from "@/lib/api/devices/mutations";
+import { NewDevice } from "@/server/db/schema/devices";
 
 type DeviceConnectRequest = {
   deviceId: string;
@@ -19,8 +20,7 @@ export const POST = async (req: Request, res: Response) => {
   if (!deviceId || !childId || !deviceName) {
     return badRequest("Invalid request");
   }
-
-  const child = (await getChildById(childId)).child;
+  const { child } = await getChildById__Unsafe(childId);
 
   if (!child) {
     return badRequest("Invalid child");
@@ -28,10 +28,15 @@ export const POST = async (req: Request, res: Response) => {
 
   const apiKey = createApiKey();
 
-  await createDevice({
-    childId: child.id,
-    deviceId: deviceId,
-    name: deviceName,
-    apiKey: apiKey,
-  });
+  const newDevice = await createDevice(
+    {
+      childId: child.id,
+      deviceId: deviceId,
+      name: deviceName,
+      apiKey: apiKey,
+    } as NewDevice,
+    child.userId,
+  );
+
+  return created(JSON.stringify(newDevice));
 };

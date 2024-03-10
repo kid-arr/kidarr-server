@@ -50,6 +50,20 @@
       "when": 1706812968116,
       "tag": "0006_wooden_next_avengers",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1710080132821,
+      "tag": "0007_oval_preak",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1710080481671,
+      "tag": "0008_dusty_wendigo",
+      "breakpoints": true
     }
   ]
 }

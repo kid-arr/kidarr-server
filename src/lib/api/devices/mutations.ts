@@ -11,11 +11,14 @@ import {
 } from "@/server/db/schema/devices";
 import { getUserAuth } from "@/lib/auth/utils";
 
-export const createDevice = async (device: NewDeviceParams) => {
+export const createDevice = async (
+  device: NewDeviceParams,
+  userId: string | undefined,
+) => {
   const { session } = await getUserAuth();
   const newDevice = insertDeviceSchema.parse({
     ...device,
-    userId: session?.user.id!,
+    userId: userId ?? session?.user.id!,
   });
   try {
     const [d] = await db.insert(devices).values(newDevice).returning();

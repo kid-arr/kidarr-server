@@ -11,7 +11,7 @@ export const getChildren = async () => {
   const { session } = await getUserAuth();
   console.log("queries", "getChildren", session?.user.id!);
 
-  //TODO: We can actually use innerJoin here 
+  //TODO: We can actually use innerJoin here
   //and destructure the args...
   const c = await db.query.children.findMany({
     where: (children, { eq }) => eq(children.userId, session?.user.id!),
@@ -36,7 +36,21 @@ export const getChildren = async () => {
   // return c;
 };
 
+export const getChildById__Unsafe = async (id: ChildId) => {
+  //this method should only be called from a /device/connect endpoint
+  //it will find the child by id without having an authenticated request
+  console.log("Queries", "getChildById__Unsafe", id);
+  const [c] = await db
+    .select()
+    .from(children)
+    .where(and(eq(children.id, id)));
+  console.log("Queries", "getChildById__Unsafe", c);
+  return { child: c };
+};
+
 export const getChildById = async (id: ChildId) => {
+  console.log("Queries", "getChildById", id);
+
   const { session } = await getUserAuth();
   const { id: childId } = childIdSchema.parse({ id });
   const [c] = await db
