@@ -15,17 +15,23 @@ type MainMapProps = {
 
 const MainMap: React.FC<MainMapProps> = ({ kids, mode }) => {
   const _renderMarker = (ping: Ping, device: Device, child: Child) => {
+    console.log("MainMap", "Ping: ", ping);
+    console.log("MainMap", "Device: ", device);
+    console.log("MainMap", "Child: ", child);
+
     return (
-      <MapMarker
-        key={ping.id}
-        deviceId={device.id}
-        childName={child.name}
-        avatar={child.avatar}
-        deviceName={device.name}
-        latitude={ping.latitude}
-        longitude={ping.longitude}
-        timestamp={ping.timestamp}
-      />
+      ping && (
+        <MapMarker
+          key={ping.id}
+          deviceId={device.id}
+          childName={child.name}
+          avatar={child.avatar}
+          deviceName={device.name}
+          latitude={ping.latitude}
+          longitude={ping.longitude}
+          timestamp={ping.timestamp}
+        />
+      )
     );
   };
   return (
